@@ -4,6 +4,8 @@ A simple school project written in Java about spaceships shooting asteroids and 
 This project is currently ongoing and is not indicative of the final game.
 
 # prerequisites
-IntelliJ IDEA
+IntelliJ IDEA.
 
-openJDK version 21 (can be installed through the IDE) 
+openJDK version 21 (can be installed through the IDE). 
+
+However Netbeans and other IDEs also work just fine.
