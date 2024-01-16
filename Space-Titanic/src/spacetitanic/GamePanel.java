@@ -1,5 +1,8 @@
 package spacetitanic;
 
+import spacetitanic.gamestates.GameState;
+import spacetitanic.gamestates.GameStateManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -11,6 +14,7 @@ public class GamePanel extends JPanel implements Runnable {
     public int FPS = 60, drawFPS = 99;
     private Thread gameThread;
     public Input input;
+    public GameStateManager gameStateManager;
 
 
     public GamePanel() {
@@ -29,6 +33,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 
         input = new Input(this);
+        gameStateManager = new GameStateManager(this);
 
         this.setBackground(Color.BLUE);
 
@@ -41,11 +46,42 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
+        switch (GameState.state) {
+            case START_MENU -> {
+                gameStateManager.update();
+            }
+            case PLAYING -> {
+                gameStateManager.update();
+            }
+            case GAME_OVER -> {
+                gameStateManager.update();
+            }
+            case KILLED -> {
+                gameStateManager.update();
+            }
+            case STATION -> {
+                gameStateManager.update();
+            }
+            case STATION_STORAGE -> {
+                gameStateManager.update();
+            }
+            case STATION_BUY_SHIP -> {
+                gameStateManager.update();
+            }
+            case STATION_UPGRADE_SHIP -> {
+                gameStateManager.update();
+            }
+            case STATION_BUY_UPGRADE -> {
+                gameStateManager.update();
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + GameState.state);
+        }
+
         /* temporary code */
         if (input.isKey(KeyEvent.VK_SPACE)) {
             System.out.println("Space being pressed...");
         }
-        System.out.println("" + input.getScroll());
+        /*System.out.println("" + input.getScroll());*/
 
         /* Update all input values */
         input.update();
@@ -54,8 +90,39 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Graphics2D graphics2D = (Graphics2D) g;
+        gameStateManager.render(graphics2D);
+
         g.setColor(Color.WHITE);
         g.drawString("drawFPS: " + drawFPS, 10, 20);
+    }
+
+    public void changeGameState(GameState gameState) {
+        System.out.println("Change Game State");
+        GameState.state = gameState;
+        switch (gameState) {
+            case START_MENU -> {
+                gameStateManager.push(gameStateManager.startMenuState);
+            }
+            case PLAYING -> {
+                gameStateManager.push(gameStateManager.playingState);
+            }
+            case GAME_OVER -> {
+            }
+            case KILLED -> {
+            }
+            case STATION -> {
+            }
+            case STATION_STORAGE -> {
+            }
+            case STATION_BUY_SHIP -> {
+            }
+            case STATION_UPGRADE_SHIP -> {
+            }
+            case STATION_BUY_UPGRADE -> {
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + gameState);
+        }
     }
 
     @Override
