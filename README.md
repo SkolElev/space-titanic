@@ -9,3 +9,6 @@ IntelliJ IDEA.
 openJDK version 21 (can be installed through the IDE). 
 
 However Netbeans and other IDEs also work just fine.
+
+# Why is it called Space Titanic?
+Well, our project is about creating a multiplayer game. Whether we succeed or fail along the way in achieving our goal, does not matter. 
