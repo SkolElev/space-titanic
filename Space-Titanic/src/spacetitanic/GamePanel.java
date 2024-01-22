@@ -81,6 +81,7 @@ public class GamePanel extends JPanel implements Runnable {
         if (input.isKey(KeyEvent.VK_SPACE)) {
             System.out.println("Space being pressed...");
         }
+
         /*System.out.println("" + input.getScroll());*/
 
         /* Update all input values */
