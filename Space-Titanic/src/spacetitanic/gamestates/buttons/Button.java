@@ -14,7 +14,7 @@ public abstract class Button {
     protected boolean hover = false, pressed = false;
     protected Color baseColor, edgeColor, textColor;
     protected String text;
-    protected BufferedImage[] normalImage, hoverImage, pressedImage, activeImage;
+    protected BufferedImage[] normalImage, hoverImage, pressedImage;
     protected BufferedImage[] currentImage;
     protected int imageCounter, imageTimer, imageDelay = 8;
     protected double centerX, centerY;
@@ -41,6 +41,30 @@ public abstract class Button {
     }
 
     public void update() {
+        imageTimer++;
+        if (imageTimer >= imageDelay) {
+            imageCounter++;
+            imageTimer = 0;
+        }
+        if (isHit(gamePanel.input.getMouseX(), gamePanel.input.getMouseY()) && gamePanel.input.isButton(1)) {
+            /* button pressed state */
+            pressed = true;
+            hover = false;
+            currentImage = pressedImage;
+        } else if (isHit(gamePanel.input.getMouseX(), gamePanel.input.getMouseY())) {
+            /* button hover state */
+            hover = true;
+            pressed = false;
+            currentImage = hoverImage;
+        } else {
+            /* button normal state */
+            hover = false;
+            pressed = false;
+            currentImage = normalImage;
+        }
+        /*if (imageCounter >= currentImage.length) {
+            imageCounter = 0;
+        }*/
 
     }
 
@@ -50,21 +74,40 @@ public abstract class Button {
         if (currentImage != null) {
             /* Draw image */
         } else {
+            /* If the image is missing */
             if (pressed) {
-
+                g2.setColor(edgeColor);
+                g2.fill(area);
+                g2.setColor(Color.green);
+                g2.draw(area);
+                if (!text.isEmpty()) {
+                    int width = g2.getFontMetrics().stringWidth(text);
+                    g2.drawString(text, (int) (centerX - width / 2), (int) centerY);
+                }
             } else if (hover) {
-
+                g2.setColor(baseColor.darker());
+                g2.fill(area);
+                g2.setColor(baseColor.brighter());
+                g2.draw(area);
+                if (!text.isEmpty()) {
+                    int width = g2.getFontMetrics().stringWidth(text);
+                    g2.drawString(text, (int) (centerX - width / 2), (int) centerY);
+                }
             } else {
                 g2.setColor(baseColor);
                 g2.fill(area);
                 g2.setColor(edgeColor);
                 g2.draw(area);
-                if (text.length() > 0) {
+                if (!text.isEmpty()) {
                     int width = g2.getFontMetrics().stringWidth(text);
                     g2.drawString(text, (int) (centerX - width / 2), (int) centerY);
                 }
             }
         }
+    }
+
+    public Button() {
+
     }
 
     public boolean isHit(double x, double y) {

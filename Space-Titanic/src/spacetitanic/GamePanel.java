@@ -3,9 +3,12 @@ package spacetitanic;
 import spacetitanic.gamestates.GameState;
 import spacetitanic.gamestates.GameStateManager;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -78,10 +81,9 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         /* temporary code */
-        if (input.isKey(KeyEvent.VK_SPACE)) {
+        if (input.isKey(KeyEvent.VK_ENTER)) {
             System.out.println("Space being pressed...");
         }
-
         /*System.out.println("" + input.getScroll());*/
 
         /* Update all input values */
@@ -95,7 +97,7 @@ public class GamePanel extends JPanel implements Runnable {
         gameStateManager.render(graphics2D);
 
         g.setColor(Color.WHITE);
-        g.drawString("drawFPS: " + drawFPS, 10, 20);
+        g.drawString("FPS: " + drawFPS, 10, 20);
     }
 
     public void changeGameState(GameState gameState) {
@@ -178,4 +180,28 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     }
+
+    /**
+     * This constructor loads the spritesheet and outputs an array of images.
+     * @param spriteWidth The width of a sprite image.
+     * @param spriteHeight The height of a sprite image.
+     * @param columnX antalet sprites på en rad
+     * @param rowY antalet rader med sprites
+     * @param filename filnamnet inkluderat undermappar
+     * @return En array med sprites
+     * @throws IOException
+     */
+    public BufferedImage[] spriteSheetLoader(int spriteWidth, int spriteHeight, int columnX, int rowY, String filename) throws IOException {
+        String filepath = "/spacetitanic/resources/" + filename;
+        BufferedImage spriteSheet = ImageIO.read(getClass().getResource(filepath));
+        BufferedImage[] sprites = new BufferedImage[columnX * rowY];
+        for (int spriteY = 0; spriteY < rowY; spriteY++) {
+            for (int spriteX = 0; spriteX < columnX; spriteX++) {
+                sprites[(columnX * spriteY) + spriteX] = spriteSheet.getSubimage(spriteX * spriteWidth, spriteY * spriteHeight, spriteWidth, spriteHeight);
+            }
+        }
+        return sprites;
+    }
+
 }
+
