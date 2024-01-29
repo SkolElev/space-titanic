@@ -11,7 +11,7 @@ import java.io.IOException;
 public class SpecialButton extends Button {
 
 
-    public SpecialButton(GamePanel gamePanel, int x, int y, BufferedImage spriteSheet, String text) {
+    public SpecialButton(GamePanel gamePanel, int x, int y, String text) {
         Shape shape = new Ellipse2D.Double(0, 0, 32, 32);
         this.gamePanel = gamePanel;
         area = new Area(shape);
@@ -43,6 +43,7 @@ public class SpecialButton extends Button {
             hoverImage[5] = sprites[3];
             hoverImage[6] = sprites[2];
             hoverImage[7] = sprites[1];
+            currentImage = normalImage;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

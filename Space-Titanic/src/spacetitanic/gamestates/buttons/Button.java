@@ -62,9 +62,12 @@ public abstract class Button {
             pressed = false;
             currentImage = normalImage;
         }
-        /*if (imageCounter >= currentImage.length) {
-            imageCounter = 0;
-        }*/
+        if (currentImage != null) {
+            if (imageCounter >= currentImage.length) {
+                imageCounter = 0;
+            }
+        }
+
 
     }
 
@@ -73,6 +76,8 @@ public abstract class Button {
         /* Code that will be used at a later time */
         if (currentImage != null) {
             /* Draw image */
+            g2.drawImage(currentImage[imageCounter], (int) localTransform.getTranslateX(), (int) localTransform.getTranslateY(),
+                    (int) (currentImage[imageCounter].getWidth() * gamePanel.scaleX), (int) (currentImage[imageCounter].getHeight() * gamePanel.scaleY), null);
         } else {
             /* If the image is missing */
             if (pressed) {

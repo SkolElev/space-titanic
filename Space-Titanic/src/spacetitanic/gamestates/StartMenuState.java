@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import spacetitanic.gamestates.buttons.Button;
 import spacetitanic.gamestates.buttons.RectangularButton;
+import spacetitanic.gamestates.buttons.SpecialButton;
 
 public class StartMenuState implements State {
 
@@ -37,11 +38,11 @@ public class StartMenuState implements State {
             if (gamePanel.input.isButtonDown(1) && button.isHit(gamePanel.input.getMouseX(), gamePanel.input.getMouseY())) {
                 System.out.println("Button hit!");
                 if (button.getText().equals("Start Game")) {
-                    System.out.println("Starting Game");
+                    /*System.out.println("Starting Game");*/
                     gamePanel.changeGameState(GameState.PLAYING);
                 }
                 if (button.getText().equals("Quit Game")) {
-                    System.out.println("Quiting Game");
+                    /*System.out.println("Quiting Game");*/
                     System.exit(0);
                 }
             }
@@ -73,7 +74,14 @@ public class StartMenuState implements State {
         Rectangle r = new Rectangle(0, 0, 100, 30);
         Button b = new RectangularButton(gamePanel, gamePanel.screenWidth * 3 / 8, gamePanel.screenHeight * 2 / 8, r, "Start Game");
         buttons.add(b);
+
         b = new RectangularButton(gamePanel, gamePanel.screenWidth * 3 / 8, gamePanel.screenHeight * 3 / 8, r, "Quit Game");
+        buttons.add(b);
+
+        b = new SpecialButton(gamePanel, gamePanel.screenWidth * 2 / 8, gamePanel.screenHeight * 2 / 8, "Start Game");
+        buttons.add(b);
+
+        b = new SpecialButton(gamePanel, gamePanel.screenWidth * 2 / 8, gamePanel.screenHeight * 3 / 8, "Quit Game");
         buttons.add(b);
     }
 
