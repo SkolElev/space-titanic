@@ -24,25 +24,25 @@ public class StartMenuState implements State {
 
     @Override
     public void update() {
-        if (gamePanel.input.isKey(KeyEvent.VK_ESCAPE)) {
-            System.out.println("Quiting Game");
+        if (gamePanel.input.isKeyDown(KeyEvent.VK_ESCAPE)) {
+            System.out.println("Key: Quiting Game");
             System.exit(0);
         }
-        if (gamePanel.input.isKey(KeyEvent.VK_ENTER)) {
-            System.out.println("Start the Game");
+        if (gamePanel.input.isKeyDown(KeyEvent.VK_ENTER)) {
+            System.out.println("Key: Starting Game");
             gamePanel.changeGameState(GameState.PLAYING);
         }
 
         for (Button button : buttons) {
             button.update();
-            if (gamePanel.input.isButtonDown(1) && button.isHit(gamePanel.input.getMouseX(), gamePanel.input.getMouseY())) {
+            if (gamePanel.input.isButtonUp(1) && button.isHit(gamePanel.input.getMouseX(), gamePanel.input.getMouseY())) {
                 System.out.println("Button hit!");
                 if (button.getText().equals("Start Game")) {
-                    /*System.out.println("Starting Game");*/
+                    System.out.println("Button: Starting Game");
                     gamePanel.changeGameState(GameState.PLAYING);
                 }
                 if (button.getText().equals("Quit Game")) {
-                    /*System.out.println("Quiting Game");*/
+                    System.out.println("Button: Quiting Game");
                     System.exit(0);
                 }
             }

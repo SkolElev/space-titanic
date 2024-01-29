@@ -81,9 +81,9 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         /* temporary code */
-        if (input.isKey(KeyEvent.VK_ENTER)) {
+        /*if (input.isKey(KeyEvent.VK_ENTER)) {
             System.out.println("Space being pressed...");
-        }
+        }*/
         /*System.out.println("" + input.getScroll());*/
 
         /* Update all input values */
@@ -101,7 +101,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void changeGameState(GameState gameState) {
-        System.out.println("Change Game State");
+        System.out.println("Game State Changed");
         GameState.state = gameState;
         switch (gameState) {
             case START_MENU -> {
@@ -185,10 +185,10 @@ public class GamePanel extends JPanel implements Runnable {
      * This constructor loads the spritesheet and outputs an array of images.
      * @param spriteWidth The width of a sprite image.
      * @param spriteHeight The height of a sprite image.
-     * @param columnX antalet sprites på en rad
-     * @param rowY antalet rader med sprites
-     * @param filename filnamnet inkluderat undermappar
-     * @return En array med sprites
+     * @param columnX The number of sprites in a column
+     * @param rowY The number of sprites in a row
+     * @param filename The file name including the subfolder
+     * @return An array of sprites
      * @throws IOException
      */
     public BufferedImage[] spriteSheetLoader(int spriteWidth, int spriteHeight, int columnX, int rowY, String filename) throws IOException {
