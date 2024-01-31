@@ -1,7 +1,9 @@
 package spacetitanic;
 
+import spacetitanic.gameobjects.Player;
 import spacetitanic.gamestates.GameState;
 import spacetitanic.gamestates.GameStateManager;
+import spacetitanic.gamestates.PlayingState;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -18,12 +20,14 @@ public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
     public Input input;
     public GameStateManager gameStateManager;
+    public Map map;
+    public Player player;
 
 
     public GamePanel() {
         /* The bases for screen and game world size */
-        screenWidth = 800;
-        screenHeight = 800;
+        screenWidth = 1000;
+        screenHeight = 900;
         worldWidth = 4000;
         worldHeight = 3000;
 
@@ -37,6 +41,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         input = new Input(this);
         gameStateManager = new GameStateManager(this);
+
+        map = new Map(this);
+        player = new Player(this, "playerName");
 
         this.setBackground(Color.BLUE);
 
@@ -86,18 +93,18 @@ public class GamePanel extends JPanel implements Runnable {
         }*/
         /*System.out.println("" + input.getScroll());*/
 
-        /* Update all input values */
+        /* Update input values */
         input.update();
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D graphics2D = (Graphics2D) g;
+    protected void paintComponent(Graphics g2) {
+        super.paintComponent(g2);
+        Graphics2D graphics2D = (Graphics2D) g2;
         gameStateManager.render(graphics2D);
 
-        g.setColor(Color.WHITE);
-        g.drawString("FPS: " + drawFPS, 10, 20);
+        g2.setColor(Color.WHITE);
+        g2.drawString("FPS: " + drawFPS, 10, 20);
     }
 
     public void changeGameState(GameState gameState) {
@@ -183,11 +190,12 @@ public class GamePanel extends JPanel implements Runnable {
 
     /**
      * This constructor loads the spritesheet and outputs an array of images.
-     * @param spriteWidth The width of a sprite image.
+     *
+     * @param spriteWidth  The width of a sprite image.
      * @param spriteHeight The height of a sprite image.
-     * @param columnX The number of sprites in a column
-     * @param rowY The number of sprites in a row
-     * @param filename The file name including the subfolder
+     * @param columnX      The number of sprites in a column
+     * @param rowY         The number of sprites in a row
+     * @param filename     The file name including the subfolder
      * @return An array of sprites
      * @throws IOException
      */

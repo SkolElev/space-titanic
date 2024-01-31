@@ -19,17 +19,23 @@ public class PlayingState implements State {
             System.out.println("Exit Playing State");
             gamePanel.gameStateManager.pop();
         }
+        gamePanel.player.update();
     }
 
     @Override
     public void render(Graphics2D g2) {
-        /* temporary code */
+        /*        *//* temporary code *//*
         g2.setColor(Color.RED);
         g2.fillRect(gamePanel.screenWidth / 6, gamePanel.screenHeight / 6, gamePanel.screenWidth * 4 / 6,
                 gamePanel.screenHeight * 4 / 6);
         g2.setColor(Color.WHITE);
         g2.drawRect(gamePanel.screenWidth / 6, gamePanel.screenHeight / 6, gamePanel.screenWidth * 4 / 6,
-                gamePanel.screenHeight * 4 / 6);
+                gamePanel.screenHeight * 4 / 6);*/
+
+        if (gamePanel.map != null) {
+            gamePanel.map.render(g2);
+        }
+        gamePanel.player.render(g2);
     }
 
     @Override
