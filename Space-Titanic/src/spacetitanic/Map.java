@@ -23,7 +23,7 @@ public class Map {
     }
 
     public void render(Graphics2D g2) {
-        g2.drawImage(background, 0, 0, null);
+        g2.drawImage(background, (int) (0 - gamePanel.camera.getxOffset()), (int) (0 - gamePanel.camera.getyOffset()), null);
     }
 
     private void loadBackground(String filename) {

@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable {
     public GameStateManager gameStateManager;
     public Map map;
     public Player player;
-
+    public Camera camera;
 
     public GamePanel() {
         /* The bases for screen and game world size */
@@ -44,6 +44,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         map = new Map(this);
         player = new Player(this, "playerName");
+
+        camera = new Camera(this, player.getShip());
 
         this.setBackground(Color.BLUE);
 
@@ -92,6 +94,9 @@ public class GamePanel extends JPanel implements Runnable {
             System.out.println("Space being pressed...");
         }*/
         /*System.out.println("" + input.getScroll());*/
+
+        /* temporary update */
+        camera.update();
 
         /* Update input values */
         input.update();
