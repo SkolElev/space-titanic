@@ -18,6 +18,8 @@ public class Ship extends GameObject {
         int[] yPoints = {0, 15, 0, -15};
         collisionShape = new Polygon(xPoints, yPoints, xPoints.length);
 
+        speed = 10.5;
+
     }
 
     public void update() {
@@ -40,28 +42,32 @@ public class Ship extends GameObject {
         g2.setColor(Color.red);
         g2.fill(collisionShape);
 
-        /* Setting the coordinates to its previous values */
+        /* Changes the coordinates to its previous values */
         g2.setTransform(oldCoordinates);
     }
 
-    public void goLeft() {
+    public void rotateLeft() {
         /* temporary code, must be improved later */
-        x -= 5.5;
+        rotation -= 5.5;
     }
 
-    public void goRight() {
+    public void rotateRight() {
         /* temporary code, must be improved later */
-        x += 5.5;
+        rotation += 5.5;
     }
 
-    public void goUp() {
-        /* temporary code, must be improved later */
-        y -= 5.5;
+    public void accelerate() {
+        double deltaX = Math.cos(Math.toRadians(rotation)) * speed;
+        double deltaY = Math.sin(Math.toRadians(rotation)) * speed;
+        x = x + deltaX;
+        y = y + deltaY;
     }
 
-    public void goDown() {
-        /* temporary code, must be improved later */
-        y += 5.5;
+    public void decelerate() {
+        double deltaX = Math.cos(Math.toRadians(rotation - 180)) * speed;
+        double deltaY = Math.sin(Math.toRadians(rotation - 180)) * speed;
+        x = x + deltaX;
+        y = y + deltaY;
     }
 
 }

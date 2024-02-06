@@ -21,28 +21,28 @@ public class Player {
     public void update() {
         if (gamePanel.input.isKey(KeyEvent.VK_W)) {
             System.out.println("Ship accelerating");
-            ship.goUp();
+            ship.accelerate();
         }
         if (gamePanel.input.isKeyUp(KeyEvent.VK_W)) {
             System.out.println("Ship stopping acceleration");
         }
         if (gamePanel.input.isKey(KeyEvent.VK_S)) {
             System.out.println("Ship reversing");
-            ship.goDown();
+            ship.decelerate();
         }
         if (gamePanel.input.isKeyUp(KeyEvent.VK_S)) {
             System.out.println("Ship stopping reversal");
         }
         if (gamePanel.input.isKey(KeyEvent.VK_A)) {
             System.out.println("Ship turning left");
-            ship.goLeft();
+            ship.rotateLeft();
         }
         if (gamePanel.input.isKeyUp(KeyEvent.VK_A)) {
             System.out.println("Ship stopping left turn");
         }
         if (gamePanel.input.isKey(KeyEvent.VK_D)) {
             System.out.println("Ship turning right");
-            ship.goRight();
+            ship.rotateRight();
         }
         if (gamePanel.input.isKeyUp(KeyEvent.VK_D)) {
             System.out.println("Ship stopping right turn");
