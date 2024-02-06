@@ -22,6 +22,21 @@ public class StartMenuState implements State {
         initialize();
     }
 
+    private void initialize() {
+        Rectangle r = new Rectangle(0, 0, 100, 30);
+        Button b = new RectangularButton(gamePanel, gamePanel.screenWidth * 3 / 8, gamePanel.screenHeight * 2 / 8, r, "Start Game");
+        buttons.add(b);
+
+        b = new RectangularButton(gamePanel, gamePanel.screenWidth * 3 / 8, gamePanel.screenHeight * 3 / 8, r, "Quit Game");
+        buttons.add(b);
+
+        b = new SpecialButton(gamePanel, gamePanel.screenWidth * 2 / 8, gamePanel.screenHeight * 2 / 8, "Start Game");
+        buttons.add(b);
+
+        b = new SpecialButton(gamePanel, gamePanel.screenWidth * 2 / 8, gamePanel.screenHeight * 3 / 8, "Quit Game");
+        buttons.add(b);
+    }
+
     @Override
     public void update() {
         if (gamePanel.input.isKeyDown(KeyEvent.VK_ESCAPE)) {
@@ -68,21 +83,6 @@ public class StartMenuState implements State {
     @Override
     public GameState getGameState() {
         return thisGameState;
-    }
-
-    private void initialize() {
-        Rectangle r = new Rectangle(0, 0, 100, 30);
-        Button b = new RectangularButton(gamePanel, gamePanel.screenWidth * 3 / 8, gamePanel.screenHeight * 2 / 8, r, "Start Game");
-        buttons.add(b);
-
-        b = new RectangularButton(gamePanel, gamePanel.screenWidth * 3 / 8, gamePanel.screenHeight * 3 / 8, r, "Quit Game");
-        buttons.add(b);
-
-        b = new SpecialButton(gamePanel, gamePanel.screenWidth * 2 / 8, gamePanel.screenHeight * 2 / 8, "Start Game");
-        buttons.add(b);
-
-        b = new SpecialButton(gamePanel, gamePanel.screenWidth * 2 / 8, gamePanel.screenHeight * 3 / 8, "Quit Game");
-        buttons.add(b);
     }
 
 }

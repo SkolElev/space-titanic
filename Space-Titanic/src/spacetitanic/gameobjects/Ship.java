@@ -1,12 +1,15 @@
 package spacetitanic.gameobjects;
 
 import spacetitanic.GamePanel;
+import spacetitanic.Vector2D;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 public class Ship extends GameObject {
-    GamePanel gamePanel;
+
+    Vector2D positionVector = new Vector2D(0.0, 0.0);
+    Vector2D velocityVector = new Vector2D(0.0, 0.0);
 
     public Ship(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -23,10 +26,16 @@ public class Ship extends GameObject {
     }
 
     public void update() {
-        /* temporary code */
-/*        int[] xPoints = {(int) (30 + x), (int) (-15 + x), (int) (-8 + x), (int) (-15 + x)};
-        int[] yPoints = {(int) (0 + y), (int) (15 + y), (int) (0 + y), (int) (-15 + y)};
-        collisionShape = new Polygon(xPoints, yPoints, xPoints.length);*/
+        /* Check collision */
+
+        /* Updates the position and speed */
+        updatePosition();
+        /* Applies friction */
+        updateVelocity();
+
+        /* Update cargo bay */
+
+        /* Weapon update */
     }
 
     public void render(Graphics2D g2) {
@@ -35,12 +44,14 @@ public class Ship extends GameObject {
         objectTransform = new AffineTransform();
         objectTransform.translate(x - gamePanel.camera.getxOffset(), y - gamePanel.camera.getyOffset());
         objectTransform.rotate(Math.toRadians(rotation));
-        /*objectTransform.scale(1.0,1.0);*/
+        objectTransform.scale(1.5, 1.5);
         g2.transform(objectTransform);
 
         /* Render "The Doritos Ship" */
         g2.setColor(Color.red);
         g2.fill(collisionShape);
+        g2.setColor(Color.white);
+        g2.draw(collisionShape);
 
         /* Changes the coordinates to its previous values */
         g2.setTransform(oldCoordinates);
@@ -68,6 +79,14 @@ public class Ship extends GameObject {
         double deltaY = Math.sin(Math.toRadians(rotation - 180)) * speed;
         x = x + deltaX;
         y = y + deltaY;
+    }
+
+    private void updatePosition() {
+        positionVector.add(velocityVector);
+    }
+
+    private void updateVelocity() {
+
     }
 
 }
