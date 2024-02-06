@@ -24,7 +24,7 @@ public class Camera {
         yOffset = yOffset - (yOffset - targetY) * 0.05f;*/
 
         /* If the camera stops at the world's edge */
-        if (xOffset < 0) {
+/*        if (xOffset < 0) {
             xOffset = 0;
         }
         if (xOffset + gamePanel.screenWidth > gamePanel.worldWidth) {
@@ -35,7 +35,7 @@ public class Camera {
         }
         if (yOffset + gamePanel.screenHeight > gamePanel.worldHeight) {
             yOffset = gamePanel.worldHeight - gamePanel.screenHeight;
-        }
+        }*/
     }
 
     public float getxOffset() {
