@@ -10,7 +10,7 @@ public abstract class GameObject {
     protected double x, y;
     /* The "rotation" is the direction in which the object is looking at.
      * While "direction" is the direction in which the object moves in. */
-    protected double rotation, direction, speed;
+    protected double rotation, direction, maxSpeed, speed, acceleration, deceleration, rotationSpeed;
 
     protected AffineTransform objectTransform = new AffineTransform();
 

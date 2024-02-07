@@ -8,8 +8,10 @@ import java.awt.geom.AffineTransform;
 
 public class Ship extends GameObject {
 
-    Vector2D positionVector = new Vector2D(0.0, 0.0);
-    Vector2D velocityVector = new Vector2D(0.0, 0.0);
+    private Vector2D positionVector = new Vector2D(0.0, 0.0);
+    private Vector2D velocityVector = new Vector2D(0.0, 0.0);
+    private double throttle = 0.0, turnSpeed, maxTurnSpeed;
+    private boolean accelerating = false, decelerating = false, turningLeft = false, turningRight = false;
 
     public Ship(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -21,8 +23,12 @@ public class Ship extends GameObject {
         int[] yPoints = {0, 15, 0, -15};
         collisionShape = new Polygon(xPoints, yPoints, xPoints.length);
 
-        speed = 10.5;
+        acceleration = 0.004;
+        deceleration = 0.002;
+        maxSpeed = 8.5;
 
+        rotationSpeed = 0.5;
+        maxTurnSpeed = 3.0;
     }
 
     public void update() {
@@ -32,6 +38,14 @@ public class Ship extends GameObject {
         updatePosition();
         /* Applies friction */
         updateVelocity();
+
+        /*if (turnSpeed > 0 && (!turningLeft && !turningLeft)) {
+            turnSpeed *= 0.995;
+            if (turnSpeed < 0.3) {
+                turnSpeed = 0.0;
+                System.out.println("NOLLL");
+            }
+        }*/
 
         /* Update cargo bay */
 
@@ -44,7 +58,7 @@ public class Ship extends GameObject {
         objectTransform = new AffineTransform();
         objectTransform.translate(x - gamePanel.camera.getxOffset(), y - gamePanel.camera.getyOffset());
         objectTransform.rotate(Math.toRadians(rotation));
-        objectTransform.scale(1.5, 1.5);
+        /*objectTransform.scale(1.5, 1.5);*/
         g2.transform(objectTransform);
 
         /* Render "The Doritos Ship" */
@@ -58,35 +72,75 @@ public class Ship extends GameObject {
     }
 
     public void rotateLeft() {
-        /* temporary code, must be improved later */
-        rotation -= 5.5;
+        turnSpeed += rotationSpeed;
+        if (turnSpeed > maxTurnSpeed) {
+            turnSpeed = maxTurnSpeed;
+        }
+        rotation -= turnSpeed;
+        if (rotation >= 180.0) {
+            rotation -= 360.0;
+        }
+        turningLeft = true;
+    }
+
+    public void stopRotatingLeft() {
+        turnSpeed = 0.0;
+        turningLeft = false;
     }
 
     public void rotateRight() {
-        /* temporary code, must be improved later */
-        rotation += 5.5;
+        turnSpeed += rotationSpeed;
+        if (turnSpeed > maxTurnSpeed) {
+            turnSpeed = maxTurnSpeed;
+        }
+        rotation += turnSpeed;
+        if (rotation < 180.0) {
+            rotation += 360.0;
+        }
+        turningRight = true;
+    }
+
+    public void stopRotatingRight() {
+        turnSpeed = 0.0;
+        turningRight = false;
     }
 
     public void accelerate() {
-        double deltaX = Math.cos(Math.toRadians(rotation)) * speed;
-        double deltaY = Math.sin(Math.toRadians(rotation)) * speed;
-        x = x + deltaX;
-        y = y + deltaY;
+        throttle = throttle + acceleration;
+        accelerating = true;
+    }
+
+    public void stopAccelerating() {
+        accelerating = false;
+        throttle = 0.0;
     }
 
     public void decelerate() {
-        double deltaX = Math.cos(Math.toRadians(rotation - 180)) * speed;
-        double deltaY = Math.sin(Math.toRadians(rotation - 180)) * speed;
-        x = x + deltaX;
-        y = y + deltaY;
+        throttle -= deceleration;
+        decelerating = true;
+    }
+
+    public void stopDecelerating() {
+        decelerating = false;
+        throttle = 0.0;
     }
 
     private void updatePosition() {
         positionVector.add(velocityVector);
+        x = positionVector.x;
+        y = positionVector.y;
+        double friction = 0.995;
+        velocityVector.scale(friction);
     }
 
     private void updateVelocity() {
+        Vector2D directionVector = new Vector2D(Math.cos(Math.toRadians(rotation)), Math.sin(Math.toRadians(rotation)));
+        velocityVector.add(directionVector.getScaled(throttle));
 
+        double currentSpeed = velocityVector.getLength();
+        if (currentSpeed > maxSpeed) {
+            velocityVector.scale(maxSpeed / currentSpeed);
+        }
     }
 
 }

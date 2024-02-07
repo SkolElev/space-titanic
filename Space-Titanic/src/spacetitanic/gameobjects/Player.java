@@ -25,6 +25,7 @@ public class Player {
         }
         if (gamePanel.input.isKeyUp(KeyEvent.VK_W)) {
             System.out.println("Ship stopping acceleration");
+            ship.stopAccelerating();
         }
         if (gamePanel.input.isKey(KeyEvent.VK_S)) {
             System.out.println("Ship reversing");
@@ -32,6 +33,7 @@ public class Player {
         }
         if (gamePanel.input.isKeyUp(KeyEvent.VK_S)) {
             System.out.println("Ship stopping reversal");
+            ship.stopDecelerating();
         }
         if (gamePanel.input.isKey(KeyEvent.VK_A)) {
             System.out.println("Ship turning left");
@@ -39,6 +41,7 @@ public class Player {
         }
         if (gamePanel.input.isKeyUp(KeyEvent.VK_A)) {
             System.out.println("Ship stopping left turn");
+            ship.stopRotatingLeft();
         }
         if (gamePanel.input.isKey(KeyEvent.VK_D)) {
             System.out.println("Ship turning right");
@@ -46,6 +49,7 @@ public class Player {
         }
         if (gamePanel.input.isKeyUp(KeyEvent.VK_D)) {
             System.out.println("Ship stopping right turn");
+            ship.stopRotatingRight();
         }
         if (gamePanel.input.isKey(KeyEvent.VK_Q)) {
             System.out.println("Ship weapon changed to automatic");
