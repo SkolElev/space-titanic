@@ -8,10 +8,11 @@ import java.awt.geom.AffineTransform;
 
 public class Ship extends GameObject {
 
-    private Vector2D positionVector = new Vector2D(0.0, 0.0);
-    private Vector2D velocityVector = new Vector2D(0.0, 0.0);
-    private double throttle = 0.0, turnSpeed, maxTurnSpeed;
-    private boolean accelerating = false, decelerating = false, turningLeft = false, turningRight = false;
+    protected Vector2D positionVector = new Vector2D(0.0, 0.0);
+    protected Vector2D velocityVector = new Vector2D(0.0, 0.0);
+    protected double throttle = 0.0, turnSpeed, maxTurnSpeed;
+    protected int updateTimer, updateDelay;
+    protected boolean accelerating = false, decelerating = false, turningLeft = false, turningRight = false;
 
     public Ship(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -25,12 +26,13 @@ public class Ship extends GameObject {
 
         acceleration = 0.004;
         deceleration = 0.002;
-        maxSpeed = 8.5;
+        maxSpeed = 9.5;
 
         rotationSpeed = 0.5;
-        maxTurnSpeed = 3.0;
+        maxTurnSpeed = 3.5;
     }
 
+    @Override
     public void update() {
         /* Check collision */
 
@@ -52,6 +54,7 @@ public class Ship extends GameObject {
         /* Weapon update */
     }
 
+    @Override
     public void render(Graphics2D g2) {
         /* temporary transform */
         AffineTransform oldCoordinates = g2.getTransform();

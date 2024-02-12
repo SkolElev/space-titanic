@@ -1,6 +1,7 @@
 package spacetitanic.gameobjects;
 
 import spacetitanic.GamePanel;
+import spacetitanic.gameobjects.ships.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -15,7 +16,7 @@ public class Player {
     public Player(GamePanel gamePanel, String playerName) {
         this.gamePanel = gamePanel;
         this.playerName = playerName;
-        ship = new Ship(gamePanel);
+        ship = new Scrapper(gamePanel);
     }
 
     public void update() {
