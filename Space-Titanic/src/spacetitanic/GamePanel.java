@@ -3,18 +3,17 @@ package spacetitanic;
 import spacetitanic.gameobjects.Player;
 import spacetitanic.gamestates.GameState;
 import spacetitanic.gamestates.GameStateManager;
-import spacetitanic.gamestates.PlayingState;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class GamePanel extends JPanel implements Runnable {
 
     public double scaleX = 1.0, scaleY = 1.0;
+    public double tileSizeX = 64, tileSizeY = 64;
     public int screenWidth, screenHeight, worldWidth, worldHeight;
     public int FPS = 60, drawFPS = 99;
     private Thread gameThread;
@@ -36,6 +35,8 @@ public class GamePanel extends JPanel implements Runnable {
         worldHeight = (int) (worldHeight * scaleY);
         screenWidth = (int) (screenWidth * scaleX);
         screenHeight = (int) (screenHeight * scaleY);
+        tileSizeX = tileSizeX * scaleX;
+        tileSizeY = tileSizeY * scaleY;
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 

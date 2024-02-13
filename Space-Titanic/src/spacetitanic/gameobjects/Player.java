@@ -58,6 +58,9 @@ public class Player {
         if (gamePanel.input.isKeyUp(KeyEvent.VK_Q)) {
             System.out.println("Ship weapon change to single shot");
         }
+        if (gamePanel.input.isKeyDown(KeyEvent.VK_I)) {
+            ship.showInfo();
+        }
 
         ship.update();
 

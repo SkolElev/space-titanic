@@ -13,6 +13,8 @@ public class Ship extends GameObject {
     protected double throttle = 0.0, turnSpeed, maxTurnSpeed;
     protected int updateTimer, updateDelay;
     protected boolean accelerating = false, decelerating = false, turningLeft = false, turningRight = false;
+    protected String shipModelName = "---", shipName = "no name";
+    protected boolean showShipInfo = false;
 
     public Ship(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -144,6 +146,21 @@ public class Ship extends GameObject {
         if (currentSpeed > maxSpeed) {
             velocityVector.scale(maxSpeed / currentSpeed);
         }
+    }
+
+    /* Ship name randomizer */
+    public void generateName() {
+        String[] pre = {
+                "Zephyr ", "Nova ", "Quasar ", "Photon ", "Blaze ", "Orbit ", "Zenith ", "Celestia ", "Vortex ", "Luminous ", "The ",
+                "Astro ", "Stellar ", "Cosmic ", "Galaxy ", "Infinity ", "Radiant ", "Eclipse ", "Aurora ", "Spectrum ", "Radius "};
+        String[] post = {
+                "Apex", "Serenity", "Galactic", "Cynosure", "Phoenix", "Solstice", "Asteria", "Pioneer", "Radiant", "Nimbus",
+                "Elysium", "Mirage", "Titan", "Hyperion", "Aurora", "Infinity", "Cosmos", "Vanguard", "Stellar", "Nebula", shipModelName};
+        shipName = pre[(int) (Math.random() * pre.length)] + post[(int) (Math.random() * post.length)];
+    }
+
+    public void showInfo() {
+        showShipInfo = !showShipInfo;
     }
 
 }

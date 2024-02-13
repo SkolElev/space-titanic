@@ -20,7 +20,22 @@ public abstract class GameObject {
     protected Shape collisionShape;
 
     public abstract void update();
-    public abstract void render(Graphics2D g2);
+
+    public void render(Graphics2D g2) {
+        int screenX = (int) (x - gamePanel.camera.getxOffset());
+        int screenY = (int) (y - gamePanel.camera.getyOffset());
+
+        renderObject(g2, screenX, screenY);
+
+        boolean nearRightEdge = screenX > gamePanel.screenWidth - gamePanel.tileSizeX;
+        boolean nearBottomEdge = screenY > gamePanel.screenHeight - gamePanel.tileSizeY;
+        boolean nearLeftEdge = screenX < 0;
+        boolean nearTopEdge = screenY < 0;
+    }
+
+    protected void renderObject(Graphics2D g2, double positionX, double PositionY) {
+
+    }
 
     public double getX() {
         return x;
