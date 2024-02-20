@@ -38,11 +38,11 @@ public class Camera {
         }*/
     }
 
-    public float getxOffset() {
+    public float getXOffset() {
         return xOffset;
     }
 
-    public float getyOffset() {
+    public float getYOffset() {
         return yOffset;
     }
 }

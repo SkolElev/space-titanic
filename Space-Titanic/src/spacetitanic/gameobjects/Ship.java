@@ -61,9 +61,9 @@ public class Ship extends GameObject {
         /* temporary transform */
         AffineTransform oldCoordinates = g2.getTransform();
         objectTransform = new AffineTransform();
-        objectTransform.translate(x - gamePanel.camera.getxOffset(), y - gamePanel.camera.getyOffset());
+        objectTransform.translate(x - gamePanel.camera.getXOffset(), y - gamePanel.camera.getYOffset());
         objectTransform.rotate(Math.toRadians(rotation));
-        /*objectTransform.scale(1.5, 1.5);*/
+        objectTransform.scale(1.5, 1.5);
         g2.transform(objectTransform);
 
         /* Render "The Doritos Ship" */

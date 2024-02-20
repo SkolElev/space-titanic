@@ -14,6 +14,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public double scaleX = 1.0, scaleY = 1.0;
     public double tileSizeX = 64, tileSizeY = 64;
+    public int worldRows = 60, worldColumns = 80;
     public int screenWidth, screenHeight, worldWidth, worldHeight;
     public int FPS = 60, drawFPS = 99;
     private Thread gameThread;
@@ -27,8 +28,8 @@ public class GamePanel extends JPanel implements Runnable {
         /* The bases for screen and game world size */
         screenWidth = 1000;
         screenHeight = 900;
-        worldWidth = 4000;
-        worldHeight = 3000;
+        worldWidth = (int) (tileSizeX * worldColumns);
+        worldHeight = (int) (tileSizeY * worldRows);
 
         /* Scaled values for the world */
         worldWidth = (int) (worldWidth * scaleX);
