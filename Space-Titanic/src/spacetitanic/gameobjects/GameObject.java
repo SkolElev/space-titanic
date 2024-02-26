@@ -1,6 +1,7 @@
 package spacetitanic.gameobjects;
 
 import spacetitanic.GamePanel;
+import spacetitanic.Map;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -67,9 +68,12 @@ public abstract class GameObject {
         objectTransform = new AffineTransform();
         objectTransform.translate(positionX, positionY);
         /*objectTransform.rotate(rotation);*/ /* Currently not in use due to the missing rotation input value */
+        /*objectTransform.rotate(Math.toRadians(rotation));*/
         g2.transform(objectTransform);
         g2.setColor(Color.orange);
         g2.fill(collisionShape);
+        /*g2.setColor(Color.BLACK);
+        g2.draw(collisionShape);*/
         g2.setTransform(old);
     }
 

@@ -14,7 +14,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     public double scaleX = 1.0, scaleY = 1.0;
     public double tileSizeX = 64, tileSizeY = 64;
+
+    /* Dependent on the map's image size of 5120x3840 pixels */
+    public int originalTileSizeX = 64, originalTileSizeY = 64;
     public int worldRows = 60, worldColumns = 80;
+
     public int screenWidth, screenHeight, worldWidth, worldHeight;
     public int FPS = 60, drawFPS = 99;
     private Thread gameThread;
@@ -25,19 +29,18 @@ public class GamePanel extends JPanel implements Runnable {
     public Camera camera;
 
     public GamePanel() {
-        /* The bases for screen and game world size */
-        screenWidth = 1000;
-        screenHeight = 900;
+        /* The bases for the screen and game world size */
+        screenWidth = 768;
+        screenHeight = 480;
+
+        tileSizeX = originalTileSizeX * scaleX;
+        tileSizeY = originalTileSizeY * scaleY;
+
         worldWidth = (int) (tileSizeX * worldColumns);
         worldHeight = (int) (tileSizeY * worldRows);
 
-        /* Scaled values for the world */
-        worldWidth = (int) (worldWidth * scaleX);
-        worldHeight = (int) (worldHeight * scaleY);
         screenWidth = (int) (screenWidth * scaleX);
         screenHeight = (int) (screenHeight * scaleY);
-        tileSizeX = tileSizeX * scaleX;
-        tileSizeY = tileSizeY * scaleY;
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 

@@ -108,13 +108,13 @@ public class Scrapper extends Ship {
         }
     }
 
-    /*public void render(Graphics2D g2) {
+    public void render(Graphics2D g2) {
         // temporary transform
         AffineTransform oldCoordinates = g2.getTransform();
         objectTransform = new AffineTransform();
         objectTransform.translate(x - gamePanel.camera.getXOffset(), y - gamePanel.camera.getYOffset());
         objectTransform.rotate(Math.toRadians(rotation));
-        objectTransform.scale(1.75, 1.75);
+        /*objectTransform.scale(1.75, 1.75);*/
         g2.transform(objectTransform);
 
         if (accelerating) {
@@ -172,10 +172,11 @@ public class Scrapper extends Ship {
         if (showShipInfo) {
             g2.setColor(Color.cyan);
             g2.drawString(shipName, (int) (x - 35 - gamePanel.camera.getXOffset()), (int) (y - 80 - gamePanel.camera.getYOffset()));
-            g2.drawString((int) x + ", " + (int) y, (int) (x - 35 - gamePanel.camera.getXOffset()), (int) (y - 60 - gamePanel.camera.getYOffset()));
+            g2.drawString((int) (x / gamePanel.tileSizeX) + ", " + (int) (y / gamePanel.tileSizeY), (int) (x - 35 - gamePanel.camera.getXOffset()), (int) (y - 60 - gamePanel.camera.getYOffset()));
+            g2.drawString((int) x + ", " + (int) y, (int) (x - 35 - gamePanel.camera.getXOffset()), (int) (y - 45 - gamePanel.camera.getYOffset()));
         }
 
-    }*/
+    }
 
 
 }

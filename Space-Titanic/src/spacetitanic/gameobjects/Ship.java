@@ -56,25 +56,25 @@ public class Ship extends GameObject {
         /* Weapon update */
     }
 
-    @Override
+/*    @Override
     public void render(Graphics2D g2) {
-        /* temporary transform */
+        *//* temporary transform *//*
         AffineTransform oldCoordinates = g2.getTransform();
         objectTransform = new AffineTransform();
         objectTransform.translate(x - gamePanel.camera.getXOffset(), y - gamePanel.camera.getYOffset());
         objectTransform.rotate(Math.toRadians(rotation));
-        objectTransform.scale(1.5, 1.5);
+        *//*objectTransform.scale(1.5, 1.5);*//*
         g2.transform(objectTransform);
 
-        /* Render "The Doritos Ship" */
+        *//* Render "The Doritos Ship" *//*
         g2.setColor(Color.red);
         g2.fill(collisionShape);
         g2.setColor(Color.white);
         g2.draw(collisionShape);
 
-        /* Changes the coordinates to its previous values */
+        *//* Changes the coordinates to its previous values *//*
         g2.setTransform(oldCoordinates);
-    }
+    }*/
 
     public void rotateLeft() {
         turnSpeed += rotationSpeed;
@@ -136,6 +136,9 @@ public class Ship extends GameObject {
         y = positionVector.y;
         double friction = 0.995;
         velocityVector.scale(friction);
+
+        x = (x + gamePanel.worldWidth) % gamePanel.worldWidth;
+        y = (y + gamePanel.worldHeight) % gamePanel.worldHeight;
     }
 
     private void updateVelocity() {
