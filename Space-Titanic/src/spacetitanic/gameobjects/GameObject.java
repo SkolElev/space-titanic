@@ -1,10 +1,10 @@
 package spacetitanic.gameobjects;
 
 import spacetitanic.GamePanel;
-import spacetitanic.Map;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
 
 public abstract class GameObject {
@@ -35,10 +35,10 @@ public abstract class GameObject {
 
         /* When going straight over the map edges */
         if (nearLeftEdge) {
-            renderObject(g2, screenX - gamePanel.worldWidth, screenY);
+            renderObject(g2, screenX + gamePanel.worldWidth, screenY);
         }
         if (nearRightEdge) {
-            renderObject(g2, screenX + gamePanel.worldWidth, screenY);
+            renderObject(g2, screenX - gamePanel.worldWidth, screenY);
         }
         if (nearTopEdge) {
             renderObject(g2, screenX, screenY + gamePanel.worldHeight);
@@ -67,14 +67,31 @@ public abstract class GameObject {
         AffineTransform old = g2.getTransform();
         objectTransform = new AffineTransform();
         objectTransform.translate(positionX, positionY);
-        /*objectTransform.rotate(rotation);*/ /* Currently not in use due to the missing rotation input value */
-        /*objectTransform.rotate(Math.toRadians(rotation));*/
+        objectTransform.rotate(Math.toRadians(rotation));
         g2.transform(objectTransform);
+
         g2.setColor(Color.orange);
         g2.fill(collisionShape);
-        /*g2.setColor(Color.BLACK);
-        g2.draw(collisionShape);*/
+        g2.setColor(Color.black);
+        g2.draw(collisionShape);
+
         g2.setTransform(old);
+    }
+
+    public boolean checkCollision(Shape otherShape) {
+        if (objectTransform.createTransformedShape(collisionShape).getBounds().intersects(otherShape.getBounds())) {
+            System.out.println("Objects intersecting");
+            Area a = new Area(objectTransform.createTransformedShape(collisionShape));
+            a.intersect(new Area(otherShape));
+            if (!a.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Shape getCollisionShape() {
+        return objectTransform.createTransformedShape(collisionShape);
     }
 
     public double getX() {

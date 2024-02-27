@@ -20,6 +20,7 @@ public class PlayingState implements State {
             gamePanel.gameStateManager.pop();
         }
         gamePanel.player.update();
+        gamePanel.map.update();
     }
 
     @Override

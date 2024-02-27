@@ -30,8 +30,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public GamePanel() {
         /* The bases for the screen and game world size */
-        screenWidth = 768;
-        screenHeight = 480;
+        screenWidth = 1600;
+        screenHeight = 900;
 
         tileSizeX = originalTileSizeX * scaleX;
         tileSizeY = originalTileSizeY * scaleY;

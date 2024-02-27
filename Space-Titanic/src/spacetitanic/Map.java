@@ -1,6 +1,7 @@
 package spacetitanic;
 
 import spacetitanic.gameobjects.GameObject;
+import spacetitanic.gameobjects.obstacle.Block;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,37 +17,52 @@ public class Map {
     public Map(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         loadBackground("/worldGraphics/space_background_tile_64px_80x60.jpg");
+        for (int i = 0; i < 20; i++) {
+            GameObject block = new Block(gamePanel, (int) (Math.random() * gamePanel.worldWidth), (int) (Math.random() * gamePanel.worldHeight));
+            gameObjects.add(block);
+        }
     }
 
     public void update() {
-
+        for (GameObject gameObject : gameObjects) {
+            gameObject.update();
+        }
     }
 
     public void render(Graphics2D g2) {
+        int tileX = (int) gamePanel.tileSizeX;
+        int tileY = (int) gamePanel.tileSizeY;
+
         /* Calculate the amount of visible tiles based on the screen size */
-        int visibleTilesX = (int) (gamePanel.screenWidth / gamePanel.tileSizeX + 3);
-        int visibleTilesY = (int) (gamePanel.screenHeight / gamePanel.tileSizeY + 3);
+        int visibleTilesX = (int) (gamePanel.screenWidth / tileX + 5);
+        int visibleTilesY = (int) (gamePanel.screenHeight / tileY + 5);
 
         /* Calculate the starting point of the camera */
-        int startTileX = (int) (gamePanel.camera.getXOffset() / gamePanel.tileSizeX);
-        int startTileY = (int) (gamePanel.camera.getYOffset() / gamePanel.tileSizeY);
+        int startTileX = (int) (gamePanel.camera.getXOffset() / tileX);
+        int startTileY = (int) (gamePanel.camera.getYOffset() / tileY);
 
         for (int y = 0; y < visibleTilesY; y++) {
             for (int x = 0; x < visibleTilesX; x++) {
                 int currentTileX = (startTileX + x - 1 + gamePanel.worldColumns) % gamePanel.worldColumns; /* The output will always be a positive value */
                 int currentTileY = (startTileY + y - 1 + gamePanel.worldRows) % gamePanel.worldRows; /* The output will always be a positive value */
 
-                int screenX = (int) (x * (int) gamePanel.tileSizeX - (int) (gamePanel.camera.getXOffset() % gamePanel.tileSizeX) - gamePanel.tileSizeX);
-                int screenY = (int) (y * (int) gamePanel.tileSizeY - (int) (gamePanel.camera.getYOffset() % gamePanel.tileSizeY) - gamePanel.tileSizeY);
+                int screenX = x * tileX - (int) (gamePanel.camera.getXOffset() % tileX) - tileX;
+                int screenY = y * tileY - (int) (gamePanel.camera.getYOffset() % tileY) - tileY;
 
-                g2.drawImage(backgroundTiles[currentTileY][currentTileX], screenX, screenY, (int) gamePanel.tileSizeX, (int) gamePanel.tileSizeY, null);
+                g2.drawImage(backgroundTiles[currentTileY][currentTileX], screenX, screenY, tileX, tileY, null);
                 g2.setColor(Color.yellow);
 
-                g2.drawRect(screenX, screenY, (int) gamePanel.tileSizeX, (int) gamePanel.tileSizeY);
+                g2.drawRect(screenX, screenY, tileX, tileY);
             }
         }
         g2.setColor(Color.red);
         g2.drawRect((int) (0 - gamePanel.camera.getXOffset()), (int) (0 - gamePanel.camera.getYOffset()), gamePanel.worldWidth, gamePanel.worldHeight);
+
+        /* Render gameObjects */
+        for (GameObject gameObject : gameObjects) {
+            gameObject.render(g2);
+        }
+
     }
 
     private void loadBackground(String filename) {
@@ -65,6 +81,10 @@ public class Map {
                 counter++;
             }
         }
+    }
+
+    public ArrayList<GameObject> getGameObjects() {
+        return gameObjects;
     }
 
 

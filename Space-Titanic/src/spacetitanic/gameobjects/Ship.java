@@ -37,23 +37,35 @@ public class Ship extends GameObject {
     @Override
     public void update() {
         /* Check collision */
+        boolean isColliding = checkCollisions();
+        if (isColliding) {
+            handleCollisions();
+        }
 
         /* Updates the position and speed */
         updatePosition();
         /* Applies friction */
         updateVelocity();
 
-        /*if (turnSpeed > 0 && (!turningLeft && !turningLeft)) {
-            turnSpeed *= 0.995;
-            if (turnSpeed < 0.3) {
-                turnSpeed = 0.0;
-                System.out.println("NOLLL");
-            }
-        }*/
-
         /* Update cargo bay */
 
         /* Weapon update */
+    }
+
+    protected boolean checkCollisions() {
+        boolean isColliding = false;
+        for (GameObject gameObject : gamePanel.map.getGameObjects()) {
+            if (checkCollision(gameObject.getCollisionShape())) {
+                isColliding = true;
+                System.out.println("Crash");
+                break;
+            }
+        }
+        return isColliding;
+    }
+
+    protected void handleCollisions() {
+
     }
 
 /*    @Override
@@ -139,6 +151,7 @@ public class Ship extends GameObject {
 
         x = (x + gamePanel.worldWidth) % gamePanel.worldWidth;
         y = (y + gamePanel.worldHeight) % gamePanel.worldHeight;
+        positionVector.set(x, y);
     }
 
     private void updateVelocity() {
