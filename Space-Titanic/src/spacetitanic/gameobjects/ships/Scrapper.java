@@ -34,8 +34,8 @@ public class Scrapper extends Ship {
         }
 
         /* "The Doritos Ship" */
-        int[] xPoints = {31, -12, -15, -12};
-        int[] yPoints = {-1, 14, 0, -16};
+        int[] xPoints = {(int) (31 * gamePanel.scaleX), (int) (-12 * gamePanel.scaleX), (int) (-15 * gamePanel.scaleX), (int) (-12 * gamePanel.scaleX)};
+        int[] yPoints = {(int) (-1 * gamePanel.scaleY), (int) (14 * gamePanel.scaleY), (int) (0 * gamePanel.scaleY), (int) (-16 * gamePanel.scaleY)};
         collisionShape = new Polygon(xPoints, yPoints, xPoints.length);
 
         acceleration = 0.004;
@@ -118,46 +118,46 @@ public class Scrapper extends Ship {
         g2.transform(objectTransform);
 
         if (accelerating) {
-            g2.drawImage(mainEngine[mainCounter], -mainEngine[mainCounter].getWidth() / 2, -mainEngine[mainCounter].getHeight() / 2,
+            g2.drawImage(mainEngine[mainCounter], (int) (-mainEngine[mainCounter].getWidth() / 2 * gamePanel.scaleX), (int) (-mainEngine[mainCounter].getHeight() / 2 * gamePanel.scaleY),
                     (int) (mainEngine[mainCounter].getWidth() * gamePanel.scaleX), (int) (mainEngine[mainCounter].getHeight() * gamePanel.scaleY),
                     null);
         } else if (!accelerating && mainCounter != 0) {
-            g2.drawImage(mainEngine[mainCounter], -mainEngine[mainCounter].getWidth() / 2, -mainEngine[mainCounter].getHeight() / 2,
+            g2.drawImage(mainEngine[mainCounter], (int) (-mainEngine[mainCounter].getWidth() / 2 * gamePanel.scaleX), (int) (-mainEngine[mainCounter].getHeight() / 2 * gamePanel.scaleY),
                     (int) (mainEngine[mainCounter].getWidth() * gamePanel.scaleX), (int) (mainEngine[mainCounter].getHeight() * gamePanel.scaleY),
                     null);
         }
 
         if (decelerating) {
-            g2.drawImage(breakEngine[breakCounter], -breakEngine[breakCounter].getWidth() / 2, -breakEngine[breakCounter].getHeight() / 2,
+            g2.drawImage(breakEngine[breakCounter], (int) (-breakEngine[breakCounter].getWidth() / 2 * gamePanel.scaleX), (int) (-breakEngine[breakCounter].getHeight() / 2 * gamePanel.scaleY),
                     (int) (breakEngine[breakCounter].getWidth() * gamePanel.scaleX), (int) (breakEngine[breakCounter].getHeight() * gamePanel.scaleY),
                     null);
         } else if (!decelerating && breakCounter != 0) {
-            g2.drawImage(breakEngine[breakCounter], -breakEngine[breakCounter].getWidth() / 2, -breakEngine[breakCounter].getHeight() / 2,
+            g2.drawImage(breakEngine[breakCounter], (int) (-breakEngine[breakCounter].getWidth() / 2 * gamePanel.scaleX), (int) (-breakEngine[breakCounter].getHeight() / 2 * gamePanel.scaleY),
                     (int) (breakEngine[breakCounter].getWidth() * gamePanel.scaleX), (int) (breakEngine[breakCounter].getHeight() * gamePanel.scaleY),
                     null);
         }
 
         if (turningLeft) {
-            g2.drawImage(leftEngine[leftCounter], -leftEngine[leftCounter].getWidth() / 2, -leftEngine[leftCounter].getHeight() / 2,
+            g2.drawImage(leftEngine[leftCounter], (int) (-leftEngine[leftCounter].getWidth() / 2 * gamePanel.scaleX), (int) (-leftEngine[leftCounter].getHeight() / 2 * gamePanel.scaleY),
                     (int) (leftEngine[leftCounter].getWidth() * gamePanel.scaleX), (int) (leftEngine[leftCounter].getHeight() * gamePanel.scaleY),
                     null);
         } else if (!turningLeft && leftCounter != 0) {
-            g2.drawImage(leftEngine[leftCounter], -leftEngine[leftCounter].getWidth() / 2, -leftEngine[leftCounter].getHeight() / 2,
+            g2.drawImage(leftEngine[leftCounter], (int) (-leftEngine[leftCounter].getWidth() / 2 * gamePanel.scaleX), (int) (-leftEngine[leftCounter].getHeight() / 2 * gamePanel.scaleY),
                     (int) (leftEngine[leftCounter].getWidth() * gamePanel.scaleX), (int) (leftEngine[leftCounter].getHeight() * gamePanel.scaleY),
                     null);
         }
 
         if (turningRight) {
-            g2.drawImage(rightEngine[rightCounter], -rightEngine[rightCounter].getWidth() / 2, -rightEngine[rightCounter].getHeight() / 2,
+            g2.drawImage(rightEngine[rightCounter], (int) (-rightEngine[rightCounter].getWidth() / 2 * gamePanel.scaleX), (int) (-rightEngine[rightCounter].getHeight() / 2 * gamePanel.scaleY),
                     (int) (rightEngine[rightCounter].getWidth() * gamePanel.scaleX), (int) (rightEngine[rightCounter].getHeight() * gamePanel.scaleY),
                     null);
         } else if (!turningRight && rightCounter != 0) {
-            g2.drawImage(rightEngine[rightCounter], -rightEngine[rightCounter].getWidth() / 2, -rightEngine[rightCounter].getHeight() / 2,
+            g2.drawImage(rightEngine[rightCounter], (int) (-rightEngine[rightCounter].getWidth() / 2 * gamePanel.scaleX), (int) (-rightEngine[rightCounter].getHeight() / 2 * gamePanel.scaleY),
                     (int) (rightEngine[rightCounter].getWidth() * gamePanel.scaleX), (int) (rightEngine[rightCounter].getHeight() * gamePanel.scaleY),
                     null);
         }
 
-        g2.drawImage(images[currentImage], -images[currentImage].getWidth() / 2, -images[currentImage].getHeight() / 2,
+        g2.drawImage(images[currentImage], (int) (-images[currentImage].getWidth() / 2 * gamePanel.scaleX), (int) (-images[currentImage].getHeight() / 2 * gamePanel.scaleY),
                 (int) (images[currentImage].getWidth() * gamePanel.scaleX), (int) (images[currentImage].getHeight() * gamePanel.scaleY),
                 null);
 

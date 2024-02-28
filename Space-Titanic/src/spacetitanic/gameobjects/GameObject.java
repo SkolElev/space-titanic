@@ -1,6 +1,7 @@
 package spacetitanic.gameobjects;
 
 import spacetitanic.GamePanel;
+import spacetitanic.Vector2D;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -13,12 +14,16 @@ public abstract class GameObject {
     /* The "rotation" is the direction in which the object is looking at.
      * While "direction" is the direction in which the object moves in. */
     protected double rotation, direction, maxSpeed, speed, acceleration, deceleration, rotationSpeed;
+    protected Vector2D positionVector = new Vector2D(0.0, 0.0);
+    protected Vector2D velocityVector = new Vector2D(0.0, 0.0);
     protected int currentImage;
     protected BufferedImage[] images;
 
     protected AffineTransform objectTransform = new AffineTransform();
 
     protected Shape collisionShape;
+    protected boolean hit = false;
+
 
     public abstract void update();
 
@@ -80,7 +85,7 @@ public abstract class GameObject {
 
     public boolean checkCollision(Shape otherShape) {
         if (objectTransform.createTransformedShape(collisionShape).getBounds().intersects(otherShape.getBounds())) {
-            System.out.println("Objects intersecting");
+            /*System.out.println("Objects intersecting");*/
             Area a = new Area(objectTransform.createTransformedShape(collisionShape));
             a.intersect(new Area(otherShape));
             if (!a.isEmpty()) {
@@ -102,4 +107,11 @@ public abstract class GameObject {
         return y;
     }
 
+    public boolean isHit() {
+        return hit;
+    }
+
+    public void setHit(boolean hit) {
+        this.hit = hit;
+    }
 }

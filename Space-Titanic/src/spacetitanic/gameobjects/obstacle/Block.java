@@ -16,12 +16,23 @@ public class Block extends GameObject {
         this.y = y;
         collisionShape = createRandomPolygon();
         color = new Color((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255), 200);
+        speed = Math.random() * 2 + 0.5;
+        direction = Math.random() * 360.0;
+        rotation = 0.0;
+        rotationSpeed = Math.random() * 0.8 - 0.4;
+        velocityVector.set(Math.cos(Math.toRadians(direction)) * speed, Math.sin(Math.toRadians(direction)) * speed);
     }
 
     @Override
     public void update() {
+        x += velocityVector.x;
+        y += velocityVector.y;
+
         x = (x + gamePanel.worldWidth) % gamePanel.worldWidth;
         y = (y + gamePanel.worldHeight) % gamePanel.worldHeight;
+
+        positionVector.set(x, y);
+        rotation += rotationSpeed;
     }
 
     @Override
@@ -43,7 +54,11 @@ public class Block extends GameObject {
         g2.draw(collisionShape);
 
         g2.drawString((int) (x / gamePanel.tileSizeX) + ", " + (int) (y / gamePanel.tileSizeY), 0, 0);
-        g2.setColor(Color.white);
+        if (hit) {
+            g2.setColor(Color.red);
+        } else {
+            g2.setColor(Color.white);
+        }
         g2.draw(collisionShape.getBounds());
 
         g2.setTransform(old);

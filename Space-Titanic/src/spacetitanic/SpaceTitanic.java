@@ -7,6 +7,7 @@ public class SpaceTitanic {
     public SpaceTitanic() {
         JFrame frame = new JFrame("Space-Titanic");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setUndecorated(true);
 
         /* "My own code" - Should be removed at a later time */
         /*frame.setExtendedState(JFrame.MAXIMIZED_BOTH);

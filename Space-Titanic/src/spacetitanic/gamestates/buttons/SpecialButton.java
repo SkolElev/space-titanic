@@ -12,7 +12,7 @@ public class SpecialButton extends Button {
 
 
     public SpecialButton(GamePanel gamePanel, int x, int y, String text) {
-        Shape shape = new Ellipse2D.Double(0, 0, 32, 32);
+        Shape shape = new Ellipse2D.Double(0, 0, 32 * gamePanel.scaleX, 32 * gamePanel.scaleY);
         this.gamePanel = gamePanel;
         area = new Area(shape);
         /* code that will be used in the future */

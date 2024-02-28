@@ -8,8 +8,6 @@ import java.awt.geom.AffineTransform;
 
 public class Ship extends GameObject {
 
-    protected Vector2D positionVector = new Vector2D(0.0, 0.0);
-    protected Vector2D velocityVector = new Vector2D(0.0, 0.0);
     protected double throttle = 0.0, turnSpeed, maxTurnSpeed;
     protected int updateTimer, updateDelay;
     protected boolean accelerating = false, decelerating = false, turningLeft = false, turningRight = false;
@@ -56,16 +54,20 @@ public class Ship extends GameObject {
         boolean isColliding = false;
         for (GameObject gameObject : gamePanel.map.getGameObjects()) {
             if (checkCollision(gameObject.getCollisionShape())) {
+                gameObject.setHit(true);
                 isColliding = true;
-                System.out.println("Crash");
+                /*System.out.println("Ship Crashed");*/
                 break;
+            } else {
+                gameObject.setHit(false);
             }
         }
         return isColliding;
     }
 
     protected void handleCollisions() {
-
+        /* When the ship hits an asteroid, set the velocity to zero */
+        velocityVector.setZero();
     }
 
 /*    @Override

@@ -23,7 +23,7 @@ public class StartMenuState implements State {
     }
 
     private void initialize() {
-        Rectangle r = new Rectangle(0, 0, 100, 30);
+        Rectangle r = new Rectangle(0, 0, (int) (100 * gamePanel.scaleX), (int) (30 * gamePanel.scaleY));
         Button b = new RectangularButton(gamePanel, gamePanel.screenWidth * 3 / 8, gamePanel.screenHeight * 2 / 8, r, "Start Game");
         buttons.add(b);
 
