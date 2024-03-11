@@ -2,9 +2,10 @@ package spacetitanic.gameobjects;
 
 import spacetitanic.GamePanel;
 import spacetitanic.Vector2D;
+import spacetitanic.gameobjects.equipments.Hardpoint;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
 
 public class Ship extends GameObject {
 
@@ -13,6 +14,7 @@ public class Ship extends GameObject {
     protected boolean accelerating = false, decelerating = false, turningLeft = false, turningRight = false;
     protected String shipModelName = "---", shipName = "no name";
     protected boolean showShipInfo = false;
+    protected ArrayList<Hardpoint> hardpoints = new ArrayList<>();
 
     public Ship(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -70,25 +72,52 @@ public class Ship extends GameObject {
         velocityVector.setZero();
     }
 
-/*    @Override
+    @Override
     public void render(Graphics2D g2) {
-        *//* temporary transform *//*
-        AffineTransform oldCoordinates = g2.getTransform();
-        objectTransform = new AffineTransform();
-        objectTransform.translate(x - gamePanel.camera.getXOffset(), y - gamePanel.camera.getYOffset());
-        objectTransform.rotate(Math.toRadians(rotation));
-        *//*objectTransform.scale(1.5, 1.5);*//*
-        g2.transform(objectTransform);
+        super.render(g2);
+        /*int screenX = (int) (x - gamePanel.camera.getXOffset());
+        int screenY = (int) (y - gamePanel.camera.getYOffset());
 
-        *//* Render "The Doritos Ship" *//*
-        g2.setColor(Color.red);
-        g2.fill(collisionShape);
-        g2.setColor(Color.white);
-        g2.draw(collisionShape);
+        renderObject(g2, screenX, screenY);
 
-        *//* Changes the coordinates to its previous values *//*
-        g2.setTransform(oldCoordinates);
-    }*/
+        boolean nearRightEdge = screenX > gamePanel.screenWidth - gamePanel.tileSizeX;
+        boolean nearBottomEdge = screenY > gamePanel.screenHeight - gamePanel.tileSizeY;
+        boolean nearLeftEdge = screenX < 0;
+        boolean nearTopEdge = screenY < 0;
+
+        *//* When going straight over the map edges *//*
+        if (nearLeftEdge) {
+            renderObject(g2, screenX + gamePanel.worldWidth, screenY);
+        }
+        if (nearRightEdge) {
+            renderObject(g2, screenX - gamePanel.worldWidth, screenY);
+        }
+        if (nearTopEdge) {
+            renderObject(g2, screenX, screenY + gamePanel.worldHeight);
+        }
+        if (nearBottomEdge) {
+            renderObject(g2, screenX, screenY - gamePanel.worldHeight);
+        }
+        *//* When going over a corner *//*
+        if (nearLeftEdge && nearTopEdge) {
+            renderObject(g2, screenX + gamePanel.worldWidth, screenY + gamePanel.worldHeight);
+        }
+        if (nearLeftEdge && nearBottomEdge) {
+            renderObject(g2, screenX + gamePanel.worldWidth, screenY - gamePanel.worldHeight);
+        }
+        if (nearRightEdge && nearTopEdge) {
+            renderObject(g2, screenX - gamePanel.worldWidth, screenY + gamePanel.worldHeight);
+        }
+        if (nearRightEdge && nearBottomEdge) {
+            renderObject(g2, screenX - gamePanel.worldWidth, screenY - gamePanel.worldHeight);
+        }*/
+
+        if (!hardpoints.isEmpty()) {
+            for (Hardpoint hardpoint : hardpoints) {
+                hardpoint.render(g2);
+            }
+        }
+    }
 
     public void rotateLeft() {
         turnSpeed += rotationSpeed;

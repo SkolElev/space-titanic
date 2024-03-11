@@ -19,7 +19,7 @@ public abstract class GameObject {
     protected int currentImage;
     protected BufferedImage[] images;
 
-    protected AffineTransform objectTransform = new AffineTransform();
+    public AffineTransform objectTransform = new AffineTransform();
 
     protected Shape collisionShape;
     protected boolean hit = false;
@@ -64,8 +64,6 @@ public abstract class GameObject {
         if (nearRightEdge && nearBottomEdge) {
             renderObject(g2, screenX - gamePanel.worldWidth, screenY - gamePanel.worldHeight);
         }
-
-
     }
 
     protected void renderObject(Graphics2D g2, double positionX, double positionY) {

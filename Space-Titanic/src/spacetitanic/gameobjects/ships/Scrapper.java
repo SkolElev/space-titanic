@@ -2,6 +2,8 @@ package spacetitanic.gameobjects.ships;
 
 import spacetitanic.GamePanel;
 import spacetitanic.gameobjects.Ship;
+import spacetitanic.gameobjects.equipments.Hardpoint;
+import spacetitanic.gameobjects.equipments.HardpointType;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -33,10 +35,7 @@ public class Scrapper extends Ship {
             throw new RuntimeException(e);
         }
 
-        /* "The Doritos Ship" */
-        int[] xPoints = {(int) (31 * gamePanel.scaleX), (int) (-12 * gamePanel.scaleX), (int) (-15 * gamePanel.scaleX), (int) (-12 * gamePanel.scaleX)};
-        int[] yPoints = {(int) (-1 * gamePanel.scaleY), (int) (14 * gamePanel.scaleY), (int) (0 * gamePanel.scaleY), (int) (-16 * gamePanel.scaleY)};
-        collisionShape = new Polygon(xPoints, yPoints, xPoints.length);
+        generateShape();
 
         acceleration = 0.004;
         deceleration = 0.002;
@@ -108,6 +107,7 @@ public class Scrapper extends Ship {
         }
     }
 
+    @Override
     public void render(Graphics2D g2) {
         // temporary transform
         AffineTransform oldCoordinates = g2.getTransform();
@@ -178,5 +178,13 @@ public class Scrapper extends Ship {
 
     }
 
+    private void generateShape() {
+        /* "The Doritos Ship" */
+        int[] xPoints = {(int) (31 * gamePanel.scaleX), (int) (-12 * gamePanel.scaleX), (int) (-15 * gamePanel.scaleX), (int) (-12 * gamePanel.scaleX)};
+        int[] yPoints = {(int) (-1 * gamePanel.scaleY), (int) (14 * gamePanel.scaleY), (int) (0 * gamePanel.scaleY), (int) (-16 * gamePanel.scaleY)};
+        collisionShape = new Polygon(xPoints, yPoints, xPoints.length);
 
+        Hardpoint h = new Hardpoint(gamePanel, this, 20, 0, HardpointType.WEAPON, "Front gun");
+        hardpoints.add(h);
+    }
 }
