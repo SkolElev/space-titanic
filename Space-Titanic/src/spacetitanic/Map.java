@@ -16,7 +16,7 @@ public class Map {
 
     public Map(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        loadBackground("/worldGraphics/space_background_tile_64px_80x60.jpg");
+        loadBackground("/worldGraphics/space_background_tile1.jpg");
         for (int i = 0; i < 20; i++) {
             GameObject block = new Block(gamePanel, (int) (Math.random() * gamePanel.worldWidth), (int) (Math.random() * gamePanel.worldHeight));
             gameObjects.add(block);
@@ -34,8 +34,8 @@ public class Map {
         int tileY = (int) gamePanel.tileSizeY;
 
         /* Calculate the amount of visible tiles based on the screen size */
-        int visibleTilesX = (int) (gamePanel.screenWidth / tileX + 5);
-        int visibleTilesY = (int) (gamePanel.screenHeight / tileY + 5);
+        int visibleTilesX = (int) (gamePanel.screenWidth / tileX + 3);
+        int visibleTilesY = (int) (gamePanel.screenHeight / tileY + 3);
 
         /* Calculate the starting point of the camera */
         int startTileX = (int) (gamePanel.camera.getXOffset() / tileX);

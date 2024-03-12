@@ -4,6 +4,7 @@ import spacetitanic.GamePanel;
 import spacetitanic.gameobjects.Ship;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 public class Hardpoint {
@@ -33,13 +34,24 @@ public class Hardpoint {
             equipped.render(g2);
         }
         g2.setColor(Color.yellow);
-        int size = 10;
-        g2.drawRect((int) (getHardCenter().getX() - size / 2), (int) (getHardCenter().getY() - size / 2), size, size);
+        int sizeX = (int) (8 * gamePanel.scaleX);
+        int sizeY = (int) (8 * gamePanel.scaleY);
+
+        AffineTransform old = g2.getTransform();
+        g2.transform(ship.objectTransform);
+
+        g2.drawRect((int) (hardCenter.getX() - sizeX / 2), (int) (hardCenter.getY() - sizeY / 2), sizeX, sizeY);
+
+        g2.setTransform(old);
     }
 
     public Point2D getHardCenter() {
         Point2D transformedPoint = ship.objectTransform.transform(hardCenter, null);
         return transformedPoint;
+    }
+
+    public Point2D getHardCenterPoint() {
+        return hardCenter;
     }
 
     public HardpointType getType() {
