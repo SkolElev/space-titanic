@@ -2,6 +2,7 @@ package spacetitanic.gameobjects.ships;
 
 import spacetitanic.GamePanel;
 import spacetitanic.gameobjects.Ship;
+import spacetitanic.gameobjects.equipments.Cannon;
 import spacetitanic.gameobjects.equipments.Hardpoint;
 import spacetitanic.gameobjects.equipments.HardpointType;
 
@@ -229,6 +230,12 @@ public class Scrapper extends Ship {
                 (int) (images[currentImage].getWidth() * gamePanel.scaleX), (int) (images[currentImage].getHeight() * gamePanel.scaleY),
                 null);
 
+        if (!hardpoints.isEmpty()) {
+            for (Hardpoint hardpoint : hardpoints) {
+                hardpoint.render(g2);
+            }
+        }
+
         g2.setTransform(old);
 
     }
@@ -241,11 +248,17 @@ public class Scrapper extends Ship {
 
         Hardpoint h = new Hardpoint(gamePanel, this, (int) (18 * gamePanel.scaleX), (int) (-1 * gamePanel.scaleX), HardpointType.WEAPON, "Front gun");
         hardpoints.add(h);
+        Cannon pewpew = new Cannon(gamePanel, h);
+        h.setEquipped(pewpew);
 
         h = new Hardpoint(gamePanel, this, (int) (-5 * gamePanel.scaleX), (int) (-8 * gamePanel.scaleX), HardpointType.WEAPON, "Left gun");
         hardpoints.add(h);
+        Cannon pewpew2 = new Cannon(gamePanel, h);
+        h.setEquipped(pewpew2);
 
         h = new Hardpoint(gamePanel, this, (int) (-5 * gamePanel.scaleX), (int) (8 * gamePanel.scaleX), HardpointType.WEAPON, "Right gun");
         hardpoints.add(h);
+        Cannon pewpew3 = new Cannon(gamePanel, h);
+        h.setEquipped(pewpew3);
     }
 }

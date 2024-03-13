@@ -7,6 +7,7 @@ import spacetitanic.gamestates.GameStateManager;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -27,6 +28,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Map map;
     public Player player;
     public Camera camera;
+    private boolean showInfo = true;
 
     public GamePanel() {
         /* The bases for the screen and game world size */
@@ -108,9 +110,15 @@ public class GamePanel extends JPanel implements Runnable {
         /* temporary update */
         camera.update();
 
+        if (input.isKeyDown(KeyEvent.VK_F1)) {
+            showInfo = !showInfo;
+        }
+
         /* Update input values */
         input.update();
+
     }
+
 
     @Override
     protected void paintComponent(Graphics g2) {
@@ -118,12 +126,23 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D graphics2D = (Graphics2D) g2;
         gameStateManager.render(graphics2D);
 
-        g2.setColor(Color.WHITE);
-        g2.drawString("FPS: " + drawFPS, 10, 20);
+        if (showInfo) {
+            g2.setColor(Color.WHITE);
+            g2.drawString("FPS: " + drawFPS, 10, 20);
+            g2.drawString("SCALE X: " + scaleX, 10, 40);
+            g2.drawString("SCALE Y: " + scaleY, 10, 60);
+            g2.drawString("WIDTH: " + screenWidth, 10, 80);
+            g2.drawString("HEIGHT: " + screenHeight, 10, 100);
+            g2.drawString("WORLD WIDTH: " + worldWidth, 10, 120);
+            g2.drawString("WORLD HEIGHT: " + worldHeight, 10, 140);
+            g2.drawString("OBJECTS: " + map.getGameObjects().size(), 10, 160);
+        }
+
     }
 
+
     public void changeGameState(GameState gameState) {
-        System.out.println("Game State Changed");
+        /*System.out.println("Game State Changed");*/
         GameState.state = gameState;
         switch (gameState) {
             case START_MENU -> {

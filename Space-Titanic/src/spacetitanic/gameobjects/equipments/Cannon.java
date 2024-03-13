@@ -2,6 +2,7 @@ package spacetitanic.gameobjects.equipments;
 
 import spacetitanic.GamePanel;
 import spacetitanic.gameobjects.GameObject;
+import spacetitanic.gameobjects.projectiles.Bullet;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -32,7 +33,7 @@ public class Cannon extends Equipment {
         try {
             BufferedImage[] pImages = gamePanel.spriteSheetLoader(6, 3, 3, 4, "ships/weapons/bullets_6x3.png");
             this.projectileImage = pImages[(int) (Math.random() * pImages.length)];
-            equipmentImages = gamePanel.spriteSheetLoader(32, 32, 8, 1, "ships/weapon/tri_cannon.png");
+            equipmentImages = gamePanel.spriteSheetLoader(32, 32, 8, 1, "ships/weapons/tri_cannon.png");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -56,8 +57,8 @@ public class Cannon extends Equipment {
 
     @Override
     public void render(Graphics2D g2) {
-        int width = (int) (equipmentImages[imageNumber].getWidth() * gamePanel.scaleX);
-        int height = (int) (equipmentImages[imageNumber].getWidth() * gamePanel.scaleY);
+        int width = (int) (equipmentImages[imageNumber].getWidth() * gamePanel.scaleX * 0.5);
+        int height = (int) (equipmentImages[imageNumber].getWidth() * gamePanel.scaleY * 0.5);
         int x = (int) hardpoint.getHardCenterPoint().getX();
         int y = (int) hardpoint.getHardCenterPoint().getY();
         g2.drawImage(equipmentImages[imageNumber], x - width / 2, y - height / 2, width, height, null);
@@ -65,7 +66,7 @@ public class Cannon extends Equipment {
 
     @Override
     public void activate() {
-
+        Bullet bullet = new Bullet(gamePanel, hardpoint.getHardCenter().getX(), hardpoint.getHardCenter().getY(), hardpoint.getShip().getRotation(), projectileSpeed, damage, range, projectileImage);
     }
 
     @Override

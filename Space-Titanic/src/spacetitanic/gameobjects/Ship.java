@@ -112,11 +112,11 @@ public class Ship extends GameObject {
             renderObject(g2, screenX - gamePanel.worldWidth, screenY - gamePanel.worldHeight);
         }*/
 
-        if (!hardpoints.isEmpty()) {
+        /*if (!hardpoints.isEmpty()) {
             for (Hardpoint hardpoint : hardpoints) {
                 hardpoint.render(g2);
             }
-        }
+        }*/
     }
 
     public void rotateLeft() {

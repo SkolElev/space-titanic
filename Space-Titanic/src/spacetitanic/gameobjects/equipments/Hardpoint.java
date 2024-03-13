@@ -33,16 +33,11 @@ public class Hardpoint {
         if (equipped != null) {
             equipped.render(g2);
         }
-        g2.setColor(Color.yellow);
+        /*g2.setColor(Color.yellow);
         int sizeX = (int) (8 * gamePanel.scaleX);
         int sizeY = (int) (8 * gamePanel.scaleY);
+        g2.drawRect((int) (hardCenter.getX() - sizeX / 2), (int) (hardCenter.getY() - sizeY / 2), sizeX, sizeY);*/
 
-        AffineTransform old = g2.getTransform();
-        g2.transform(ship.objectTransform);
-
-        g2.drawRect((int) (hardCenter.getX() - sizeX / 2), (int) (hardCenter.getY() - sizeY / 2), sizeX, sizeY);
-
-        g2.setTransform(old);
     }
 
     public Point2D getHardCenter() {
@@ -68,5 +63,9 @@ public class Hardpoint {
 
     public String getHardpointName() {
         return hardpointName;
+    }
+
+    public Ship getShip() {
+        return ship;
     }
 }

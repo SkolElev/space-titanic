@@ -22,8 +22,7 @@ public abstract class GameObject {
     public AffineTransform objectTransform = new AffineTransform();
 
     protected Shape collisionShape;
-    protected boolean hit = false;
-
+    protected boolean hit = false, dead = false;
 
     public abstract void update();
 
@@ -111,5 +110,13 @@ public abstract class GameObject {
 
     public void setHit(boolean hit) {
         this.hit = hit;
+    }
+
+    public double getRotation() {
+        return rotation;
+    }
+
+    public double getDirection() {
+        return direction;
     }
 }

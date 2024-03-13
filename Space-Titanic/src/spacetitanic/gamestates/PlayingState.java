@@ -16,7 +16,7 @@ public class PlayingState implements State {
     @Override
     public void update() {
         if (gamePanel.input.isKeyUp(KeyEvent.VK_ESCAPE)) {
-            System.out.println("Exit Playing State");
+            /*System.out.println("Exited Playing State");*/
             gamePanel.gameStateManager.pop();
         }
         gamePanel.player.update();
