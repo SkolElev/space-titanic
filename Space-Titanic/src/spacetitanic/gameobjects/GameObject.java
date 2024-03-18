@@ -63,6 +63,7 @@ public abstract class GameObject {
         if (nearRightEdge && nearBottomEdge) {
             renderObject(g2, screenX - gamePanel.worldWidth, screenY - gamePanel.worldHeight);
         }
+
     }
 
     protected void renderObject(Graphics2D g2, double positionX, double positionY) {

@@ -32,7 +32,7 @@ public class Cannon extends Equipment {
         fireCounter = 0;
         try {
             BufferedImage[] pImages = gamePanel.spriteSheetLoader(6, 3, 3, 4, "ships/weapons/bullets_6x3.png");
-            this.projectileImage = pImages[(int) (Math.random() * pImages.length)];
+            projectileImage = pImages[(int) (Math.random() * pImages.length)];
             equipmentImages = gamePanel.spriteSheetLoader(32, 32, 8, 1, "ships/weapons/tri_cannon.png");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -41,9 +41,18 @@ public class Cannon extends Equipment {
 
     @Override
     public void update() {
+        if (firing && !reloading) {
+            fireCounter++;
+            if (fireCounter >= fireDelay) {
+                firing = false;
+                fireCounter = 0;
+            }
+        }
+
         if (ammunition <= 0) {
             reloading = true;
         }
+
         if (reloading) {
             imageNumber = 0;
             reloadTime++;
@@ -51,6 +60,7 @@ public class Cannon extends Equipment {
                 reloadTimer = 0;
                 reloading = false;
                 ammunition = maxAmmunition;
+                firing = false;
             }
         }
     }
@@ -66,7 +76,12 @@ public class Cannon extends Equipment {
 
     @Override
     public void activate() {
-        Bullet bullet = new Bullet(gamePanel, hardpoint.getHardCenter().getX(), hardpoint.getHardCenter().getY(), hardpoint.getShip().getRotation(), projectileSpeed, damage, range, projectileImage);
+        if (!firing) {
+            Bullet bullet = new Bullet(gamePanel, hardpoint.getHardCenter().getX(), hardpoint.getHardCenter().getY(), hardpoint.getShip().getRotation(), projectileSpeed, damage, range, projectileImage);
+            gamePanel.map.addObjects(bullet);
+            firing = true;
+            ammunition--;
+        }
     }
 
     @Override

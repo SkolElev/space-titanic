@@ -2,7 +2,9 @@ package spacetitanic.gameobjects;
 
 import spacetitanic.GamePanel;
 import spacetitanic.Vector2D;
+import spacetitanic.gameobjects.equipments.Equipment;
 import spacetitanic.gameobjects.equipments.Hardpoint;
+import spacetitanic.gameobjects.equipments.HardpointType;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 public class Ship extends GameObject {
 
     protected double throttle = 0.0, turnSpeed, maxTurnSpeed;
-    protected int updateTimer, updateDelay;
+    protected int updateTimer, updateDelay, currentWeapon;
     protected boolean accelerating = false, decelerating = false, turningLeft = false, turningRight = false;
     protected String shipModelName = "---", shipName = "no name";
     protected boolean showShipInfo = false;
@@ -50,6 +52,9 @@ public class Ship extends GameObject {
         /* Update cargo bay */
 
         /* Weapon update */
+        for (Hardpoint hardpoint : hardpoints) {
+            hardpoint.update();
+        }
     }
 
     protected boolean checkCollisions() {
@@ -75,48 +80,32 @@ public class Ship extends GameObject {
     @Override
     public void render(Graphics2D g2) {
         super.render(g2);
-        /*int screenX = (int) (x - gamePanel.camera.getXOffset());
-        int screenY = (int) (y - gamePanel.camera.getYOffset());
+    }
 
-        renderObject(g2, screenX, screenY);
+    public Equipment getWeapon() {
+        if (!hardpoints.isEmpty()) {
+            return hardpoints.get(currentWeapon).getEquipped();
+        } else {
+            return null;
+        }
+    }
 
-        boolean nearRightEdge = screenX > gamePanel.screenWidth - gamePanel.tileSizeX;
-        boolean nearBottomEdge = screenY > gamePanel.screenHeight - gamePanel.tileSizeY;
-        boolean nearLeftEdge = screenX < 0;
-        boolean nearTopEdge = screenY < 0;
-
-        *//* When going straight over the map edges *//*
-        if (nearLeftEdge) {
-            renderObject(g2, screenX + gamePanel.worldWidth, screenY);
-        }
-        if (nearRightEdge) {
-            renderObject(g2, screenX - gamePanel.worldWidth, screenY);
-        }
-        if (nearTopEdge) {
-            renderObject(g2, screenX, screenY + gamePanel.worldHeight);
-        }
-        if (nearBottomEdge) {
-            renderObject(g2, screenX, screenY - gamePanel.worldHeight);
-        }
-        *//* When going over a corner *//*
-        if (nearLeftEdge && nearTopEdge) {
-            renderObject(g2, screenX + gamePanel.worldWidth, screenY + gamePanel.worldHeight);
-        }
-        if (nearLeftEdge && nearBottomEdge) {
-            renderObject(g2, screenX + gamePanel.worldWidth, screenY - gamePanel.worldHeight);
-        }
-        if (nearRightEdge && nearTopEdge) {
-            renderObject(g2, screenX - gamePanel.worldWidth, screenY + gamePanel.worldHeight);
-        }
-        if (nearRightEdge && nearBottomEdge) {
-            renderObject(g2, screenX - gamePanel.worldWidth, screenY - gamePanel.worldHeight);
-        }*/
-
-        /*if (!hardpoints.isEmpty()) {
-            for (Hardpoint hardpoint : hardpoints) {
-                hardpoint.render(g2);
+    public void nextWeapon() {
+        do {
+            currentWeapon++;
+            if (currentWeapon >= hardpoints.size()) {
+                currentWeapon = 0;
             }
-        }*/
+        } while (hardpoints.get(currentWeapon).getType() != HardpointType.GENERAL || hardpoints.get(currentWeapon).getType() != HardpointType.WEAPON);
+    }
+
+    public void previousWeapon() {
+        do {
+            currentWeapon--;
+            if (currentWeapon < 0) {
+                currentWeapon = hardpoints.size() - 1;
+            }
+        } while (hardpoints.get(currentWeapon).getType() != HardpointType.GENERAL || hardpoints.get(currentWeapon).getType() != HardpointType.WEAPON);
     }
 
     public void rotateLeft() {

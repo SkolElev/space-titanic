@@ -87,5 +87,9 @@ public class Map {
         return gameObjects;
     }
 
+    public void addObjects(GameObject gameObject) {
+        gameObjects.add(gameObject);
+    }
+
 
 }

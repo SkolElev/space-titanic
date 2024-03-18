@@ -238,6 +238,12 @@ public class Scrapper extends Ship {
 
         g2.setTransform(old);
 
+        if (showShipInfo) {
+            g2.setColor(Color.cyan);
+            g2.drawString(shipName, (int) (x - 35 - gamePanel.camera.getXOffset()), (int) (y - 80 - gamePanel.camera.getYOffset()));
+            g2.drawString((int) (x / gamePanel.tileSizeX) + ", " + (int) (y / gamePanel.tileSizeY), (int) (x - 35 - gamePanel.camera.getXOffset()), (int) (y - 60 - gamePanel.camera.getYOffset()));
+            g2.drawString((int) x + ", " + (int) y, (int) (x - 35 - gamePanel.camera.getXOffset()), (int) (y - 45 - gamePanel.camera.getYOffset()));
+        }
     }
 
     private void generateShape() {

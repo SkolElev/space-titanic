@@ -11,6 +11,7 @@ public class Bullet extends GameObject {
 
     private int damage, range, rangeCounter = 0;
     private double deltaX, deltaY;
+    private BufferedImage bulletImage;
 
     public Bullet(GamePanel gamePanel, double x, double y, double direction, double speed, int damage, int range, BufferedImage bulletImage) {
         this.gamePanel = gamePanel;
@@ -20,7 +21,7 @@ public class Bullet extends GameObject {
         this.speed = speed;
         this.damage = damage;
         this.range = range;
-        this.images[0] = bulletImage;
+        this.bulletImage = bulletImage;
         int[] xPoints = {(int) (0 * gamePanel.scaleX), (int) (4 * gamePanel.scaleX), (int) (6 * gamePanel.scaleX), (int) (4 * gamePanel.scaleX), (int) (0 * gamePanel.scaleX)};
         int[] yPoints = {(int) (-1 * gamePanel.scaleY), (int) (-1 * gamePanel.scaleY), (int) (0 * gamePanel.scaleY), (int) (1 * gamePanel.scaleY), (int) (1 * gamePanel.scaleY)};
         collisionShape = new Polygon(xPoints, yPoints, xPoints.length);
@@ -43,6 +44,18 @@ public class Bullet extends GameObject {
 
     @Override
     protected void renderObject(Graphics2D g2, double positionX, double positionY) {
-        super.renderObject(g2, positionX, positionY);
+        /*super.renderObject(g2, positionX, positionY);*/
+        AffineTransform old = g2.getTransform();
+        objectTransform = new AffineTransform();
+        objectTransform.translate(positionX, positionY);
+        objectTransform.rotate(Math.toRadians(rotation));
+        g2.transform(old);
+
+        g2.drawImage(bulletImage,
+                0,
+                (int) (bulletImage.getHeight() / 2 * gamePanel.scaleY),
+                (int) (bulletImage.getWidth() * gamePanel.scaleX),
+                (int) (bulletImage.getHeight() * gamePanel.scaleY),
+                null);
     }
 }

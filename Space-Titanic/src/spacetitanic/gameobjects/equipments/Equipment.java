@@ -26,9 +26,7 @@ public abstract class Equipment {
         this.hardpoint = hardpoint;
     }
 
-    public void update() {
-
-    }
+    public abstract void update();
 
     public abstract void render(Graphics2D g2);
 

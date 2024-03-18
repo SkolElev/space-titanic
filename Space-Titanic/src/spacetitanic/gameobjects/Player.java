@@ -58,9 +58,55 @@ public class Player {
         if (gamePanel.input.isKeyUp(KeyEvent.VK_Q)) {
             /*System.out.println("Ship weapon change to single shot");*/
         }
+        if (gamePanel.input.isKey(KeyEvent.VK_SPACE)) {
+            switch (ship.getWeapon().getEquipmentType()) {
+                case CANNON -> {
+                    ship.getWeapon().activate();
+                }
+                case AUTOCANNON -> {
+                }
+                case MISSILE -> {
+                }
+                case BEAM -> {
+                }
+                case MINE -> {
+                }
+                case SHIELD -> {
+                }
+                case DEPLOYABLE -> {
+                }
+                case RADAR -> {
+                }
+                case AUTOMATED -> {
+                }
+            }
+        }
+        if (gamePanel.input.isKeyDown(KeyEvent.VK_SPACE)) {
+            switch (ship.getWeapon().getEquipmentType()) {
+                case CANNON -> {
+                }
+                case AUTOCANNON -> {
+                }
+                case MISSILE -> {
+                }
+                case BEAM -> {
+                }
+                case MINE -> {
+                }
+                case SHIELD -> {
+                }
+                case DEPLOYABLE -> {
+                }
+                case RADAR -> {
+                }
+                case AUTOMATED -> {
+                }
+            }
+        }
         if (gamePanel.input.isKeyDown(KeyEvent.VK_I)) {
             ship.showInfo();
         }
+
 
         ship.update();
 
