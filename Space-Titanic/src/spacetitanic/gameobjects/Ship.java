@@ -2,6 +2,7 @@ package spacetitanic.gameobjects;
 
 import spacetitanic.GamePanel;
 import spacetitanic.Vector2D;
+import spacetitanic.gameobjects.abilities.Delay;
 import spacetitanic.gameobjects.equipments.Equipment;
 import spacetitanic.gameobjects.equipments.Hardpoint;
 import spacetitanic.gameobjects.equipments.HardpointType;
@@ -61,10 +62,12 @@ public class Ship extends GameObject {
         boolean isColliding = false;
         for (GameObject gameObject : gamePanel.map.getGameObjects()) {
             if (checkCollision(gameObject.getCollisionShape())) {
-                gameObject.setHit(true);
-                isColliding = true;
-                /*System.out.println("Ship Crashed");*/
-                break;
+                if (!(gameObject instanceof Delay delay && delay.isDelayed())) {
+                    gameObject.setHit(true);
+                    isColliding = true;
+                    /*System.out.println("Ship Crashed");*/
+                    break;
+                }
             } else {
                 gameObject.setHit(false);
             }

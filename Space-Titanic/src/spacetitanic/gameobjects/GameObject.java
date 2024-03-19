@@ -120,4 +120,8 @@ public abstract class GameObject {
     public double getDirection() {
         return direction;
     }
+
+    public boolean isDead() {
+        return dead;
+    }
 }

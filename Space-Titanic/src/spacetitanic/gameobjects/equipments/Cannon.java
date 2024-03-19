@@ -20,7 +20,7 @@ public class Cannon extends Equipment {
         this.hardpointType = HardpointType.WEAPON;
 
         /* Basic cannon values */
-        maxAmmunition = 10;
+        maxAmmunition = 25;
         damage = 20;
         range = 900;
         reloadTime = 2.0;
@@ -77,7 +77,10 @@ public class Cannon extends Equipment {
     @Override
     public void activate() {
         if (!firing) {
-            Bullet bullet = new Bullet(gamePanel, hardpoint.getHardCenter().getX(), hardpoint.getHardCenter().getY(), hardpoint.getShip().getRotation(), projectileSpeed, damage, range, projectileImage);
+            double xPoints = hardpoint.getHardCenter().getX() + gamePanel.camera.getXOffset();
+            double yPoints = hardpoint.getHardCenter().getY() + gamePanel.camera.getYOffset();
+            /*System.out.println("x: " + xPoints + " | y: " + yPoints);*/
+            Bullet bullet = new Bullet(gamePanel, xPoints, yPoints, hardpoint.getShip().getRotation(), projectileSpeed * 2.5, damage, range, projectileImage);
             gamePanel.map.addObjects(bullet);
             firing = true;
             ammunition--;

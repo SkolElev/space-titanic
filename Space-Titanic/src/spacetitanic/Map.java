@@ -24,8 +24,17 @@ public class Map {
     }
 
     public void update() {
+        GameObject deadObject = null;
         for (GameObject gameObject : gameObjects) {
             gameObject.update();
+            if (gameObject.isDead()) {
+                deadObject = gameObject;
+                continue;
+            }
+        }
+
+        if (deadObject != null) {
+            gameObjects.remove(deadObject);
         }
     }
 
