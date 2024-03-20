@@ -2,13 +2,15 @@ package spacetitanic.gameobjects.obstacle;
 
 import spacetitanic.GamePanel;
 import spacetitanic.gameobjects.GameObject;
+import spacetitanic.gameobjects.abilities.Destroyable;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
-public class Block extends GameObject {
+public class Block extends GameObject implements Destroyable {
     private Color color;
+    private int maxHitpoints, hitpoints;
 
     public Block(GamePanel gamePanel, int x, int y) {
         this.gamePanel = gamePanel;
@@ -21,6 +23,8 @@ public class Block extends GameObject {
         rotation = 0.0;
         rotationSpeed = Math.random() * 0.8 - 0.4;
         velocityVector.set(Math.cos(Math.toRadians(direction)) * speed, Math.sin(Math.toRadians(direction)) * speed);
+        maxHitpoints = 300;
+        hitpoints = maxHitpoints;
     }
 
     @Override
@@ -54,6 +58,8 @@ public class Block extends GameObject {
         g2.draw(collisionShape);
 
         g2.drawString((int) (x / gamePanel.tileSizeX) + ", " + (int) (y / gamePanel.tileSizeY), 0, 0);
+        g2.drawString("HP: " + hitpoints, 0, 20);
+
         if (hit) {
             g2.setColor(Color.red);
         } else {
@@ -62,6 +68,13 @@ public class Block extends GameObject {
         g2.draw(collisionShape.getBounds());
 
         g2.setTransform(old);
+
+        int hitbarLength = 150;
+        int currentHBLength = (int) ((double) hitpoints / maxHitpoints * hitbarLength);
+        g2.setColor(Color.orange);
+        g2.fillRect((int) (positionX - hitbarLength / 2), (int) (positionY + collisionShape.getBounds().getHeight() / 2), currentHBLength, 10);
+        g2.setColor(Color.red);
+        g2.drawRect((int) (positionX - hitbarLength / 2), (int) (positionY + collisionShape.getBounds().getHeight() / 2), hitbarLength, 10);
     }
 
     private Shape createRandomPolygon() {
@@ -84,4 +97,17 @@ public class Block extends GameObject {
         return new Polygon(xPoints, yPoints, xPoints.length);
     }
 
+    @Override
+    public void destroyed() {
+        System.out.println("Target destroyed");
+    }
+
+    @Override
+    public void takeDamage(int damage) {
+        hitpoints -= damage;
+        if (hitpoints <= 0) {
+            destroyed();
+            dead = true;
+        }
+    }
 }

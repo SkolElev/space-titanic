@@ -5,7 +5,7 @@ public interface Destroyable {
 
     public void destroyed();
 
-    public boolean takeDamage(int damage);
+    public void takeDamage(int damage);
 
     /*public boolean isTargeted();*/
 

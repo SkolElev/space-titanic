@@ -17,7 +17,7 @@ public class Map {
     public Map(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         loadBackground("/worldGraphics/space_background_tile1.jpg");
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 40; i++) {
             GameObject block = new Block(gamePanel, (int) (Math.random() * gamePanel.worldWidth), (int) (Math.random() * gamePanel.worldHeight));
             gameObjects.add(block);
         }

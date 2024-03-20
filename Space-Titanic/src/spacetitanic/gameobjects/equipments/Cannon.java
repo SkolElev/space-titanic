@@ -20,7 +20,7 @@ public class Cannon extends Equipment {
         this.hardpointType = HardpointType.WEAPON;
 
         /* Basic cannon values */
-        maxAmmunition = 25;
+        maxAmmunition = 100;
         damage = 20;
         range = 900;
         reloadTime = 2.0;

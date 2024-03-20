@@ -3,6 +3,7 @@ package spacetitanic.gameobjects.projectiles;
 import spacetitanic.GamePanel;
 import spacetitanic.gameobjects.GameObject;
 import spacetitanic.gameobjects.abilities.Delay;
+import spacetitanic.gameobjects.abilities.Destroyable;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -14,7 +15,7 @@ public class Bullet extends GameObject implements Delay {
     private double deltaX, deltaY;
     private BufferedImage bulletImage;
     private boolean delayed = true;
-    private int delayTimer = 0, delayDuration = 10;
+    private int delayTimer = 0, delayDuration = 5;
 
     public Bullet(GamePanel gamePanel, double x, double y, double direction, double speed, int damage, int range, BufferedImage bulletImage) {
         this.gamePanel = gamePanel;
@@ -41,14 +42,25 @@ public class Bullet extends GameObject implements Delay {
         if (rangeCounter < range) {
             x = x + deltaX;
             y = y + deltaY;
+            x = (x + gamePanel.worldWidth) % gamePanel.worldWidth;
+            y = (y + gamePanel.worldHeight) % gamePanel.worldHeight;
         } else {
             dead = true;
         }
 
         if (!checkDelayed()) {
-            /* Check if the bullet has collided with another object */
-
+            /* Check if the bullet has collided with another objects */
+            for (GameObject gameObject : gamePanel.map.getGameObjects()) {
+                if (gameObject instanceof Destroyable destroyable) {
+                    if (checkCollision(gameObject.getCollisionShape())) {
+                        destroyable.takeDamage(damage);
+                        dead = true;
+                    }
+                }
+            }
         }
+
+
     }
 
     @Override
