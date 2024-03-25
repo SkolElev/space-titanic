@@ -61,7 +61,7 @@ public class Player {
         if (gamePanel.input.isKey(KeyEvent.VK_SPACE)) {
             switch (ship.getWeapon().getEquipmentType()) {
                 case CANNON -> {
-
+                    ship.getWeapon().activate();
                 }
                 case AUTOCANNON -> {
                 }
@@ -84,7 +84,7 @@ public class Player {
         if (gamePanel.input.isKeyDown(KeyEvent.VK_SPACE)) {
             switch (ship.getWeapon().getEquipmentType()) {
                 case CANNON -> {
-                    ship.getWeapon().activate();
+
                 }
                 case AUTOCANNON -> {
                 }

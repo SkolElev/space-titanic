@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 public class Map {
     private GamePanel gamePanel;
@@ -68,8 +69,13 @@ public class Map {
         g2.drawRect((int) (0 - gamePanel.camera.getXOffset()), (int) (0 - gamePanel.camera.getYOffset()), gamePanel.worldWidth, gamePanel.worldHeight);
 
         /* Render gameObjects */
-        for (GameObject gameObject : gameObjects) {
-            gameObject.render(g2);
+        for (int i = 0; i < gameObjects.size(); i++) {
+            try {
+                gameObjects.get(i).render(g2);
+            } catch (ConcurrentModificationException e) {
+                System.out.println("Caught a ConcurrentModificationException!");
+                i--;
+            }
         }
 
     }
