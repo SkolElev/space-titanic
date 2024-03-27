@@ -1,6 +1,7 @@
 package spacetitanic.gameobjects.projectiles;
 
 import spacetitanic.GamePanel;
+import spacetitanic.gameobjects.Explosion;
 import spacetitanic.gameobjects.GameObject;
 import spacetitanic.gameobjects.abilities.Delay;
 import spacetitanic.gameobjects.abilities.Destroyable;
@@ -54,7 +55,9 @@ public class Bullet extends GameObject implements Delay {
                 if (gameObject instanceof Destroyable destroyable) {
                     if (checkCollision(gameObject.getCollisionShape())) {
                         destroyable.takeDamage(damage);
-                        dead = true;
+                        dead = true; // Delete the bullet!
+                        Explosion e = new Explosion(gamePanel, x, y, 20, 6, null);
+                        gamePanel.map.addEffect(e);
                     }
                 }
             }

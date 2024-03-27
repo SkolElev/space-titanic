@@ -1,6 +1,7 @@
 package spacetitanic;
 
 import spacetitanic.gameobjects.Player;
+import spacetitanic.gameobjects.equipments.Equipment;
 import spacetitanic.gamestates.GameState;
 import spacetitanic.gamestates.GameStateManager;
 
@@ -136,6 +137,7 @@ public class GamePanel extends JPanel implements Runnable {
             g2.drawString("WORLD WIDTH: " + worldWidth, 10, 120);
             g2.drawString("WORLD HEIGHT: " + worldHeight, 10, 140);
             g2.drawString("OBJECTS: " + map.getGameObjects().size(), 10, 160);
+
         }
 
     }

@@ -1,6 +1,7 @@
 package spacetitanic;
 
 import spacetitanic.gameobjects.GameObject;
+import spacetitanic.gameobjects.GraphicEffects;
 import spacetitanic.gameobjects.obstacle.Block;
 
 import java.awt.*;
@@ -14,6 +15,7 @@ public class Map {
     private ArrayList<GameObject> gameObjects = new ArrayList<>();
     private BufferedImage background;
     private BufferedImage[][] backgroundTiles;
+    private ArrayList<GraphicEffects> graphicEffects = new ArrayList<>();
 
     public Map(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -36,6 +38,19 @@ public class Map {
 
         if (deadObject != null) {
             gameObjects.remove(deadObject);
+        }
+
+        GraphicEffects deadEffect = null;
+        for (GraphicEffects ge : graphicEffects) {
+            ge.update();
+            if (ge.isDead()) {
+                deadEffect = ge;
+                continue;
+            }
+        }
+
+        if (deadEffect != null) {
+            graphicEffects.remove(deadEffect);
         }
     }
 
@@ -78,6 +93,16 @@ public class Map {
             }
         }
 
+        /* Render graphicEffects */
+        for (int i = 0; i < graphicEffects.size(); i++) {
+            try {
+                graphicEffects.get(i).render(g2);
+            } catch (ConcurrentModificationException e) {
+                System.out.println("Caught a ConcurrentModificationException!");
+                i--;
+            }
+        }
+
     }
 
     private void loadBackground(String filename) {
@@ -100,6 +125,11 @@ public class Map {
 
     public ArrayList<GameObject> getGameObjects() {
         return gameObjects;
+    }
+
+    public void addEffect(GraphicEffects ge) {
+        graphicEffects.add(ge);
+        System.out.println("ex. " + graphicEffects.size());
     }
 
     public void addObjects(GameObject gameObject) {

@@ -6,6 +6,7 @@ import spacetitanic.Vector2D;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class Particle {
@@ -22,23 +23,45 @@ public class Particle {
     private int lifeCounter;
     private Color color;
 
-    public Particle(GamePanel gamePanel, double x, double y, int size, Color color) {
+    public Particle(GamePanel gamePanel, double x, double y, float size, Color color) {
         this.gamePanel = gamePanel;
         this.x = x;
         this.y = y;
         this.color = color;
         if (size < 2) {
-            size = 2;
+            size = 2.0f;
         }
         if (this.color == null) {
             int r = (int) (Math.random() * 255);
             int g = (int) (Math.random() * 255);
             int b = (int) (Math.random() * 255);
-            color = new Color(r, g, b);
+            this.color = new Color(r, g, b);
         }
-        particleShape = new Ellipse2D.Float(0 - size / 2.0f, 0 - size / 2.0f, (float) size, (float) size);
+        particleShape = new Ellipse2D.Float(0 - size / 2.0f, 0 - size / 2.0f, size, size);
         rotation = 0;
         rotationSpeed = 0;
+        direction = Math.random() * 360.0;
+        speed = Math.random() * 8.0 * gamePanel.scaleX + 1.0;
+        lifeCounter = (int) (Math.random() * 20 + 10);
+        deltaX = Math.cos(Math.toRadians(direction) * speed);
+        deltaY = Math.sin(Math.toRadians(direction) * speed);
+    }
+
+    public Particle(GamePanel gamePanel, double x, double y, Color color) {
+        this.gamePanel = gamePanel;
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        if (this.color == null) {
+            int r = (int) (Math.random() * 255);
+            int g = (int) (Math.random() * 255);
+            int b = (int) (Math.random() * 255);
+            this.color = new Color(r, g, b);
+        }
+
+        particleShape = new Rectangle(0, 0, 20, 5);
+        rotation = 0;
+        rotationSpeed = 5.0;
         direction = Math.random() * 360.0;
         speed = Math.random() * 8.0 * gamePanel.scaleX + 1.0;
         lifeCounter = (int) (Math.random() * 20 + 10);
@@ -55,6 +78,7 @@ public class Particle {
         y = y + deltaY;
         x = (x + gamePanel.worldWidth) % gamePanel.worldWidth;
         y = (y + gamePanel.worldHeight) % gamePanel.worldHeight;
+        rotation += rotationSpeed;
     }
 
     public void render(Graphics2D g2) {
@@ -108,5 +132,9 @@ public class Particle {
         g2.fill(particleShape);
 
         g2.setTransform(old);
+    }
+
+    public boolean isDead() {
+        return dead;
     }
 }
