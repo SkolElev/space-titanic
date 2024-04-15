@@ -110,4 +110,8 @@ public class Block extends GameObject implements Destroyable {
             dead = true;
         }
     }
+
+    public Color getColor() {
+        return color;
+    }
 }

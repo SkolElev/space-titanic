@@ -57,6 +57,17 @@ public class Particle {
             int g = (int) (Math.random() * 255);
             int b = (int) (Math.random() * 255);
             this.color = new Color(r, g, b);
+        } else {
+            int originalR = color.getRed();
+            int originalG = color.getGreen();
+            int originalB = color.getBlue();
+            int r = (int) (Math.random() * 50 - 25) + originalR;
+            int g = (int) (Math.random() * 50 - 25) + originalG;
+            int b = (int) (Math.random() * 50 - 25) + originalB;
+            r = (Math.max(Math.min(r, 255), 0));
+            g = (Math.max(Math.min(g, 255), 0));
+            b = (Math.max(Math.min(b, 255), 0));
+            this.color = new Color(r, g, b);
         }
 
         particleShape = new Rectangle(0, 0, 20, 5);

@@ -5,6 +5,7 @@ import spacetitanic.gameobjects.Explosion;
 import spacetitanic.gameobjects.GameObject;
 import spacetitanic.gameobjects.abilities.Delay;
 import spacetitanic.gameobjects.abilities.Destroyable;
+import spacetitanic.gameobjects.obstacle.Block;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -56,8 +57,13 @@ public class Bullet extends GameObject implements Delay {
                     if (checkCollision(gameObject.getCollisionShape())) {
                         destroyable.takeDamage(damage);
                         dead = true; // Delete the bullet!
-                        Explosion e = new Explosion(gamePanel, x, y, 20, 6, null);
-                        gamePanel.map.addEffect(e);
+                        if (gameObject instanceof Block) {
+                            Explosion e = new Explosion(gamePanel, x, y, 20, 6, ((Block) gameObject).getColor());
+                            gamePanel.map.addEffect(e);
+                        } else {
+                            Explosion e = new Explosion(gamePanel, x, y, 20, 6, null);
+                            gamePanel.map.addEffect(e);
+                        }
                     }
                 }
             }
